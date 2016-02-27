@@ -20,9 +20,7 @@ function timeReply(nick, to, text, message) {
   }
 }
 
-
 client.addListener('message', timeReply);
-
 
 client.addListener('message#', function(nick, to, text, message) {
   console.log(nick, to, text);
