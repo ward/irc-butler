@@ -1,0 +1,22 @@
+{
+  "name": "irc-file-server",
+  "version": "0.0.1",
+  "description": "Allow IRC users to look for files you serve and download them off you via DCC.",
+  "main": "main.js",
+  "scripts": {
+    "test": "./node_modules/jshint/bin/jshint && ./node_modules/jscs/bin/jscs --preset=google *.js"
+  },
+  "author": {
+    "name": "Ward Muylaert",
+    "email": "ward.muylaert@gmail.com",
+    "url": "http://wardje.eu/"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "irc": "0.4.1"
+  },
+  "devDependencies": {
+    "jshint": "*",
+    "jscs": "*"
+  }
+}

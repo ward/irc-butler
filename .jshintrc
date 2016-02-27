@@ -1,0 +1,6 @@
+{
+  "curly": true,
+  "esnext": true,
+  "quotmark": "single",
+  "undef": true
+}
