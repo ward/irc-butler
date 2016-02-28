@@ -8,3 +8,9 @@ Error when installing the `irc` dependency can be fixed by doing
 
 This irc library is apparently pretty shit and lacks dcc. It is also pretty
 unmaintained.
+
+Documentation is done with JSDoc. To generate the documentation, use
+
+    npm run-script doc
+
+which will create a documentation directory.

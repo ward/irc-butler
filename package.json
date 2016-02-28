@@ -4,6 +4,7 @@
   "description": "Allow IRC users to look for files you serve and download them off you via DCC.",
   "main": "main.js",
   "scripts": {
+    "doc": "./node_modules/.bin/jsdoc --destination ./documentation *.js",
     "test": "./node_modules/jshint/bin/jshint && ./node_modules/jscs/bin/jscs --preset=google *.js"
   },
   "author": {
@@ -17,7 +18,8 @@
     "cheerio": "0.20.0"
   },
   "devDependencies": {
-    "jshint": "*",
-    "jscs": "*"
+    "jscs": "*",
+    "jsdoc": "*",
+    "jshint": "*"
   }
 }
