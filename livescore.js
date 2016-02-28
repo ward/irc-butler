@@ -1,7 +1,17 @@
+/**
+ * Livescore module
+ * @module livescore
+ */
+
 'use strict';
 
 var $ = require('cheerio');
 var http = require('http');
+
+const CACHE_DURATION = 60 * 1000; // milliseconds
+
+var games = {};
+var lastUpdate = new Date(0);
 
 class Game {
   constructor(time, home, away, score) {
@@ -17,7 +27,7 @@ class Game {
   }
 }
 
-function fetchLivescore(callback) {
+function fetchLivescore(success, failure) {
   var livescoreurl = 'http://www.livescore.com/';
   http.get(livescoreurl, function(response) {
     var data = '';
@@ -25,10 +35,10 @@ function fetchLivescore(callback) {
       data += chunk;
     });
     response.on('end', function() {
-      callback(data);
+      success(data);
     });
   }).on('error', function() {
-    throw new Error();
+    failure();
   });
 }
 
@@ -36,7 +46,7 @@ function parseLivescore(data) {
   var parsed = $.load(data);
   var divcontent = parsed('div.content');
 
-  var games = {};
+  games = {};
   var country = '';
   var competition = '';
 
@@ -65,9 +75,109 @@ function parseLivescore(data) {
       games[country][competition].push(game);
     }
   });
-  console.log(games);
 }
 
-exports.get = function() {
-  fetchLivescore(parseLivescore);
+/**
+ * If time for an update, run an update.
+ */
+function update(success, failure) {
+  if (new Date() - lastUpdate > CACHE_DURATION) {
+    console.log('Cache invalidated, running update.');
+    var κ = function(data) {
+      parseLivescore(data);
+      lastUpdate = new Date();
+      success();
+    };
+    fetchLivescore(κ, failure);
+  } else {
+    success();
+  }
+}
+
+/**
+ * Check objects keys to see if there is a case insensitive match to the given
+ * string.
+ *
+ * @return {String} The actual key in the object
+ * @return {undefined} If no matching key
+ */
+function caseInsensitiveKeySearch(object, key) {
+  var _key = key.toLowerCase();
+  for (let k of Object.keys(object)) {
+    if (k.toLowerCase() === _key) {
+      return k;
+    }
+  }
+}
+
+/**
+ * EXPORTS
+ */
+
+/**
+ * Gets all the games available in a big object categorised by country and
+ * competition.
+ */
+exports.getAllGames = function(callback) {
+  var failure = function() {
+    callback({});
+  };
+  var success = function() {
+    callback(games);
+  };
+  update(success, failure);
+};
+/**
+ * Gets a list of the countries available.
+ * Calls the next function with an array of countries.
+ */
+exports.getCountries = function(callback) {
+  var failure = function() {
+    callback([]);
+  };
+  var success = function() {
+    callback(Object.keys(games));
+  };
+  update(success, failure);
+};
+/**
+ * Gets a list of the competitions available in a certain country.
+ * Calls the next function with an array of competitions for the country.
+ */
+exports.getCompetitions = function(country, callback) {
+  var failure = function() {
+    callback([]);
+  };
+  var success = function() {
+    var _country = caseInsensitiveKeySearch(games, country);
+    if (_country !== undefined) {
+      callback(Object.keys(games[_country]));
+    } else {
+      callback([]);
+    }
+  };
+  update(success, failure);
+};
+/**
+ * Gets a list of the games in a competition in a country.
+ * Calls the next function with an array of Game objects.
+ */
+exports.getGames = function(country, competition, callback) {
+  var failure = function() {
+    callback([]);
+  };
+  var success = function() {
+    var _country = caseInsensitiveKeySearch(games, country);
+    if (_country !== undefined) {
+      var _competition = caseInsensitiveKeySearch(games, country);
+      if (_competition !== undefined) {
+        callback(games[country][competition]);
+      } else {
+        callback([]);
+      }
+    } else {
+      callback([]);
+    }
+  };
+  update(success, failure);
 };
