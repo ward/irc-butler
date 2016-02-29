@@ -1,5 +1,6 @@
 * Install nvm (`brew nvm`).
 * Install node (`nvm install 5.7.0`).
+* Install dependencies (`npm install`)
 
 Error when installing the `irc` dependency can be fixed by doing
 

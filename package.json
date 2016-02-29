@@ -1,10 +1,10 @@
 {
-  "name": "irc-file-server",
+  "name": "irc-butler",
   "version": "0.0.1",
-  "description": "Allow IRC users to look for files you serve and download them off you via DCC.",
+  "description": "IRC bot",
   "main": "main.js",
   "scripts": {
-    "doc": "./node_modules/.bin/jsdoc --destination ./documentation *.js",
+    "doc": "./node_modules/.bin/jsdoc --package ./package.json --readme ./README.md --destination ./documentation *.js",
     "test": "./node_modules/jshint/bin/jshint && ./node_modules/jscs/bin/jscs --preset=google *.js"
   },
   "author": {
