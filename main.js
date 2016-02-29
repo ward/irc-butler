@@ -1,5 +1,8 @@
 var irc = require('irc');
 
+// Plugins
+const football = require('./footballplugin.js');
+
 /* Start the connection. */
 var client = new irc.Client('irc.freenode.net', 'irc-butler', {
   channels: ['#irc-butler'],
@@ -25,3 +28,5 @@ client.addListener('message', timeReply);
 client.addListener('message#', function(nick, to, text, message) {
   console.log(nick, to, text);
 });
+
+football.activateOn(client);
