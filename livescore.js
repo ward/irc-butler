@@ -82,12 +82,8 @@ function parseLivescore(data) {
       var atags = $('a', leagueinfo[0]);
       country = $(atags[0]).text().trim();
       competition = $(atags[1]).text().trim();
-      if (!games.hasOwnProperty(country)) {
-        games[country] = {};
-      }
-      if (!games[country].hasOwnProperty(competition)) {
-        games[country][competition] = [];
-      }
+      games[country] = games[country] || {};
+      games[country][competition] = games[country][competition] || [];
     } else if (row.hasClass('row-gray')) {
       // Actual game entry
       var time = $($('div.min', row)[0]).text().trim();
@@ -212,15 +208,75 @@ exports.getGames = function(country, competition, callback) {
   var success = function() {
     var _country = caseInsensitiveKeySearch(games, country);
     if (_country !== undefined) {
-      var _competition = caseInsensitiveKeySearch(games, country);
+      var _competition = caseInsensitiveKeySearch(games[_country], competition);
       if (_competition !== undefined) {
-        callback(games[country][competition]);
+        callback(games[_country][_competition]);
       } else {
         callback([]);
       }
     } else {
       callback([]);
     }
+  };
+  update(success, failure);
+};
+/**
+ * Search the games for any matches.
+ * TODO: Does this allow outsiders to change the internal information? (yes it does...)
+ *
+ * @param {array} words Several strings to match against
+ * @param {function} callback Called with the games matching all strings (in
+ *                            teams, competition, or country)
+ */
+exports.search = function(words, callback) {
+  var failure = function() {
+    callback([]);
+  };
+  var success = function() {
+    var _words = words.map(function(w) { return w.toLowerCase(); });
+    var results = {};
+    for (let country of Object.keys(games)) {
+      let _country = country.toLowerCase();
+
+      // If all words matched by country, add entire country.
+      let matcher = function(word) {
+        return _country.includes(word);
+      };
+      if (_words.every(matcher)) {
+        results[country] = games[country];
+        continue;
+      }
+
+      for (let competition of Object.keys(games[country])) {
+        let _competition = competition.toLowerCase();
+
+        // If all words matched country or competition, add entire competition.
+        let matcher = function(word) {
+          return _country.includes(word) || _competition.includes(word);
+        };
+        if (_words.every(matcher)) {
+          results[country] = results[country] || {};
+          results[country][competition] = games[country][competition];
+          continue;
+        }
+
+        for (let game of games[country][competition]) {
+          // If all words matched anything, add that game.
+          let matcher = function(word) {
+            return _country.includes(word) || _competition.includes(word) ||
+                    game.home.toLowerCase().includes(word) ||
+                    game.away.toLowerCase().includes(word);
+          };
+          if (_words.every(matcher)) {
+            results[country] = results[country] || {};
+            results[country][competition] = results[country][competition] || [];
+            results[country][competition].push(game);
+          }
+        }
+      }
+    }
+
+    callback(results);
   };
   update(success, failure);
 };
