@@ -80,6 +80,37 @@ function doSearch(str, client, target) {
 }
 
 /**
+ * Takes a country and gets all the games from all competitions from said
+ * country.
+ * Particularly of use when dealing with something like Champions League.
+ */
+function doAllFromCountry(country, client, target) {
+  var result = {};
+  var foundSomething = false;
+  result[country] = {};
+  function callback(competitions) {
+    if (competitions.length > 0) {
+      foundSomething = true;
+      let competition = competitions.shift();
+      let κ = function(games) {
+        result[country][competition] = games;
+        callback(competitions);
+      };
+      LS.getGames(country, competition, κ);
+    } else {
+      // Handled every competition for this country
+
+      let reply = 'No games for ' + country + '.';
+      if (foundSomething) {
+        reply = gamesToString(result);
+      }
+      client.say(target, reply);
+    }
+  }
+  LS.getCompetitions(country, callback);
+}
+
+/**
  * Changes a games object into a string ready for IRC.
  *
  * @param {object} games The object holding all the games.
@@ -129,6 +160,16 @@ exports.activateOn = function(client) {
     let competitionmatch = message.match(/^-l (.+?)\/(.+)$/);
     if (message === '') {
       doCountries(client, to);
+    } else if (message.search(/^u?cl$/i) > -1) {
+      doAllFromCountry('Champions League', client, to);
+    } else if (message.search(/^el$/i) > -1) {
+      doAllFromCountry('Europa League', client, to);
+    } else if (message.search(/^epl$/i) > -1) {
+      doGames('England', 'Premier League', client, to);
+    } else if (message.search(/^(?:la ?)?liga$/i) > -1) {
+      doGames('Spain', 'Liga BBVA', client, to);
+    } else if (message.search(/^bundes(?:liga)?$/i) > -1) {
+      doGames('Germany', 'Bundesliga', client, to);
     } else if (competitionmatch !== null) {
       doGames(competitionmatch[1], competitionmatch[2], client, to);
     } else if (countrymatch !== null) {
