@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "doc": "./node_modules/.bin/jsdoc --package ./package.json --readme ./README.md --destination ./documentation *.js",
-    "test": "./node_modules/jshint/bin/jshint && ./node_modules/jscs/bin/jscs --preset=google *.js"
+    "test": "./node_modules/.bin/eslint *.js && ./node_modules/.bin/jshint && ./node_modules/.bin/jscs --preset=google *.js"
   },
   "author": {
     "name": "Ward Muylaert",
@@ -21,6 +21,7 @@
   "devDependencies": {
     "jscs": "*",
     "jsdoc": "*",
-    "jshint": "*"
+    "jshint": "*",
+    "eslint": "*"
   }
 }
