@@ -10,8 +10,8 @@ var client = new irc.Client('irc.freenode.net', 'irc-butler', {
   debug: true,
   encoding: 'utf-8',
   floodProtection: true,
-  userName: 'irc-butler',
-  realName: 'irc-butler',
+  userName: 'butler',
+  realName: 'Your butler for a nice IRC experience',
   stripColors: true,
 });
 

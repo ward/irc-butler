@@ -9,6 +9,10 @@ Error when installing the `irc` dependency can be fixed by doing
     brew install icu4c
     brew link icu4c --force
 
+Or on Debian/Ubuntu
+
+    apt-get install libicu-dev
+
 Note: This irc library is apparently pretty shit and lacks dcc. It is also somewhat
 unmaintained. Should probably look into another library or extend this one with
 what I require.
