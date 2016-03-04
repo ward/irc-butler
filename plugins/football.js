@@ -4,7 +4,7 @@
  */
 'use strict';
 
-const LS = require('./livescore.js');
+const LS = require('./football-livescore.js');
 
 function doCountries(client, target) {
   function callback(countries) {

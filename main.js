@@ -3,8 +3,8 @@ var irc = require('irc');
 var plugins = require('./plugins.js');
 
 // Plugins
-const football = require('./footballplugin.js');
-const math = require('./mathplugin.js');
+const football = require('./plugins/football.js');
+const calc = require('./plugins/calc.js');
 
 /* Start the connection. */
 var client = new irc.Client('irc.freenode.net', 'irc-butler', {
@@ -24,4 +24,4 @@ client.addListener('message#', function(nick, to, text, message) {
 plugins.enablePlugins(client);
 
 client.plugins.add(football);
-client.plugins.add(math);
+client.plugins.add(calc);
