@@ -1,5 +1,7 @@
 var irc = require('irc');
 
+var plugins = require('./plugins.js');
+
 // Plugins
 const football = require('./footballplugin.js');
 const math = require('./mathplugin.js');
@@ -19,5 +21,7 @@ client.addListener('message#', function(nick, to, text, message) {
   console.log(nick, to, text);
 });
 
-football.activateOn(client);
-math.activateOn(client);
+plugins.enablePlugins(client);
+
+client.plugins.add(football);
+client.plugins.add(math);
