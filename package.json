@@ -4,7 +4,7 @@
   "description": "IRC bot",
   "main": "main.js",
   "scripts": {
-    "doc": "./node_modules/.bin/jsdoc --package ./package.json --readme ./README.md --destination ./documentation *.js",
+    "doc": "./node_modules/.bin/jsdoc --package ./package.json --readme ./README.md --destination ./documentation *.js plugins/*.js",
     "test": "./node_modules/.bin/eslint *.js && ./node_modules/.bin/jshint && ./node_modules/.bin/jscs --preset=google *.js"
   },
   "author": {

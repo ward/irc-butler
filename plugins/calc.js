@@ -1,6 +1,6 @@
 /**
  * Math plugin
- * @module mathplugin
+ * @module plugins/calc
  */
 'use strict';
 

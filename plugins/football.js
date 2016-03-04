@@ -1,6 +1,6 @@
 /**
  * Football plugin
- * @module footballplugin
+ * @module plugins/football
  */
 'use strict';
 

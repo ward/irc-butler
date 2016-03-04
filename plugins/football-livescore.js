@@ -1,6 +1,6 @@
 /**
  * Livescore module
- * @module livescore
+ * @module plugins/football-livescore
  */
 
 'use strict';

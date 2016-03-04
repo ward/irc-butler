@@ -2,11 +2,14 @@
  * Extend an IRC client with plugin functionality.
  *
  * Should handle:
+ *
  *  * Get a list of loaded plugins
  *  * Load a plugin
  *  * Unload a plugin
  *  * Handle help for a plugin
  *  * Show detailed info for a plugin
+ *
+ * @module plugins
  */
 'use strict';
 
