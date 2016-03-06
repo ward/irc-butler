@@ -170,6 +170,8 @@ exports.activateOn = function(client) {
       doGames('Spain', 'Liga BBVA', client, to);
     } else if (message.search(/^bundes(?:liga)?$/i) > -1) {
       doGames('Germany', 'Bundesliga', client, to);
+    } else if (message.search(/^mls$/i) > -1) {
+      doGames('USA', 'Major League Soccer', client, to);
     } else if (competitionmatch !== null) {
       doGames(competitionmatch[1], competitionmatch[2], client, to);
     } else if (countrymatch !== null) {
