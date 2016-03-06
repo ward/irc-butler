@@ -14,10 +14,10 @@ var client = new irc.Client('irc.freenode.net', 'irc-butler', {
   floodProtection: true,
   userName: 'butler',
   realName: 'Your butler for a nice IRC experience',
-  stripColors: true,
+  stripColors: true
 });
 
-client.addListener('message#', function(nick, to, text, message) {
+client.addListener('message#', function(nick, to, text, _raw) {
   console.log(nick, to, text);
 });
 
