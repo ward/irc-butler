@@ -6,8 +6,6 @@
 
 var math = require('mathjs');
 
-// TODO: Safety of user input https://github.com/josdejong/mathjs/issues/469
-
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     if (text.startsWith('!calc')) {

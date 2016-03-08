@@ -19,8 +19,7 @@ what I require.
 
 # Running
 
-Edit `main.js` (TODO: proper configuration file, TODO: Default to some random
-names) with your IRC information.
+Edit `main.js` with your IRC information.
 
 # Testing
 

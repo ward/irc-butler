@@ -222,7 +222,6 @@ exports.getGames = function(country, competition, callback) {
 };
 /**
  * Search the games for any matches.
- * TODO: Does this allow outsiders to change the internal information? (yes it does...)
  *
  * @param {array} words Several strings to match against
  * @param {function} callback Called with the games matching all strings (in
