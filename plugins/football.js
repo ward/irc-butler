@@ -181,3 +181,34 @@ exports.activateOn = function(client) {
     }
   });
 };
+exports.info = {
+  id: 'football',
+  version: '0.0.1',
+  description: 'Keeps you up to date with football scores.',
+  commands: [
+    {
+      trigger: '!game',
+      description: 'Lists all available countries'
+    },
+    {
+      trigger: '!game -l COUNTRY',
+      description: 'Lists competitions in a country'
+    },
+    {
+      trigger: '!game -l COUNTRY/COMPETITION',
+      description: 'Lists games in a competition within a country. ' +
+                   'The / is the separator.'
+    },
+    {
+      trigger: '!game SHORTCUT',
+      description: 'Some competitions get a shortcut. Currently: ' +
+                   'EPL, Liga, CL, EL, Bundes, MLS.'
+    },
+    {
+      trigger: '!game SEARCHTERMS',
+      description: 'Uses the search terms (split by spaces) to look for ' +
+                   'games. Matches can be made in team names, competitions, ' +
+                   'or countries.'
+    }
+  ]
+};

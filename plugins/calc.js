@@ -20,3 +20,15 @@ exports.activateOn = function(client) {
     }
   });
 };
+exports.info = {
+  id: 'calc',
+  version: '0.0.1',
+  description: 'Calculator to handle your mathematical problems.',
+  commands: [
+    {
+      trigger: '!calc QUERY',
+      description: 'Performs the query and returns the result. ' +
+                    'Notifies you if this fails.'
+    }
+  ]
+};
