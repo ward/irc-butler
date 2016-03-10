@@ -21,6 +21,8 @@
         "terms": ["todo", "fixme"],
         "location": "anywhere"
       }
-    ]
+    ],
+    "semi": [2, "always"],
+    "no-unreachable": 2
   }
 }
