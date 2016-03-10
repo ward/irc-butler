@@ -1,3 +1,4 @@
+var util = require('util');
 var irc = require('irc');
 
 var plugins = require('./plugins.js');
@@ -18,7 +19,7 @@ var client = new irc.Client('irc.freenode.net', 'irc-butler', {
 });
 
 client.addListener('message#', function(nick, to, text, _raw) {
-  console.log(nick, to, text);
+  util.log(nick, to, text);
 });
 
 plugins.enablePlugins(client);

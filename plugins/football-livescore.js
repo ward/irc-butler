@@ -5,6 +5,7 @@
 
 'use strict';
 
+var util = require('util');
 var $ = require('cheerio');
 var http = require('http');
 
@@ -105,7 +106,7 @@ function parseLivescore(data) {
  */
 function update(success, failure) {
   if (new Date() - lastUpdate > CACHE_DURATION) {
-    console.log('Cache invalidated, running update.');
+    util.log('Cache invalidated, running update.');
     var κ = function(data) {
       parseLivescore(data);
       lastUpdate = new Date();
