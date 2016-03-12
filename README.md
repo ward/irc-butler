@@ -13,6 +13,16 @@ Or on Debian/Ubuntu
 
     apt-get install libicu-dev
 
+After upgrading from Debian 7 wheezy to Debian 8 jessie, I was getting errors
+involving this libicu. To be precise, it was still looking for the `.48`
+versions of all the parts while Debian was now on `.52`.  Reinstalling the node
+bindings forces it to recompile and take into account the changing of the
+libicu versions. This is done with
+
+    npm install node-icu-charset-detector
+
+That package is a dependency of the `irc` library we use.
+
 Note: This irc library is apparently pretty shit and lacks dcc. It is also somewhat
 unmaintained. Should probably look into another library or extend this one with
 what I require.
