@@ -14,8 +14,9 @@
   },
   "license": "GPL-3.0",
   "dependencies": {
-    "irc": "0.4.1",
     "cheerio": "0.20.0",
+    "config": "1.19.0",
+    "irc": "0.4.1",
     "mathjs": "3.0.0"
   },
   "devDependencies": {

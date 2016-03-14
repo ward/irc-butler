@@ -1,0 +1,11 @@
+{
+  "irc": {
+    "network": "irc.freenode.net",
+    "nick": "test-butler",
+    "channels": [
+      "#irc-butler"
+    ],
+    "userName": "butler",
+    "realName": "Your butler for a nice IRC experience"
+  }
+}
