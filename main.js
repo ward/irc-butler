@@ -7,6 +7,7 @@ var plugins = require('./plugins.js');
 // Plugins
 const football = require('./plugins/football.js');
 const calc = require('./plugins/calc.js');
+const time = require('./plugins/time.js');
 
 /* Start the connection. */
 var client = new irc.Client(
@@ -31,3 +32,4 @@ plugins.enablePlugins(client);
 
 client.plugins.add(football);
 client.plugins.add(calc);
+client.plugins.add(time);
