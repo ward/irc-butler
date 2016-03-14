@@ -4,8 +4,8 @@
  */
 'use strict';
 
-var textMatcher = /^!(?:time|utc|gmt)$/i;
-var gmtMatcher = /^!gmt$/i;
+const textMatcher = /^!(?:time|utc|gmt)$/i;
+const gmtMatcher = /^!gmt$/i;
 
 function timeParser(text) {
   let reply = 'It is currently ';

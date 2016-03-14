@@ -146,31 +146,43 @@ function formatText(text, how) {
   }
 }
 
+const gameTrigger = /^!game/i;
+const gamesTrigger = /^!games/i;
+const countryMatcher = /^-l (.+)$/i;
+const competitionMatcher = /^-l (.+?)\/(.+)$/i;
+const clShortcut = /^u?cl$/i;
+const elShortcut = /^el$/i;
+const eplShortcut = /^epl$/i;
+const ligaShortcut = /^(?:la ?)?liga$/i;
+const bundesShortcut = /^bundes(?:liga)?$/i;
+const mlsShortcut = /^mls$/i;
+
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, message) {
-    if (message.startsWith('!games')) {
+    message = message.trim();
+    if (message.search(gamesTrigger) > -1) {
       message = message.substring(7);
-    } else if (message.startsWith('!game')) {
+    } else if (message.search(gameTrigger) > -1) {
       message = message.substring(6);
     } else {
       return;
     }
 
-    let countrymatch = message.match(/^-l (.+)$/);
-    let competitionmatch = message.match(/^-l (.+?)\/(.+)$/);
+    let countrymatch = message.match(countryMatcher);
+    let competitionmatch = message.match(competitionMatcher);
     if (message === '') {
       doCountries(client, to);
-    } else if (message.search(/^u?cl$/i) > -1) {
+    } else if (message.search(clShortcut) > -1) {
       doAllFromCountry('Champions League', client, to);
-    } else if (message.search(/^el$/i) > -1) {
+    } else if (message.search(elShortcut) > -1) {
       doAllFromCountry('Europa League', client, to);
-    } else if (message.search(/^epl$/i) > -1) {
+    } else if (message.search(eplShortcut) > -1) {
       doGames('England', 'Premier League', client, to);
-    } else if (message.search(/^(?:la ?)?liga$/i) > -1) {
+    } else if (message.search(ligaShortcut) > -1) {
       doGames('Spain', 'Liga BBVA', client, to);
-    } else if (message.search(/^bundes(?:liga)?$/i) > -1) {
+    } else if (message.search(bundesShortcut) > -1) {
       doGames('Germany', 'Bundesliga', client, to);
-    } else if (message.search(/^mls$/i) > -1) {
+    } else if (message.search(mlsShortcut) > -1) {
       doGames('USA', 'Major League Soccer', client, to);
     } else if (competitionmatch !== null) {
       doGames(competitionmatch[1], competitionmatch[2], client, to);

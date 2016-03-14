@@ -6,9 +6,11 @@
 
 var math = require('mathjs');
 
+const trigger = /^!calc /i;
+
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
-    if (text.startsWith('!calc')) {
+    if (text.search(trigger) > -1) {
       var expr = text.substring(6);
       try {
         var ans = math.eval(expr);
