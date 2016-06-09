@@ -1,11 +1,11 @@
 {
   "name": "irc-butler",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "IRC bot",
   "main": "main.js",
   "scripts": {
     "doc": "./node_modules/.bin/jsdoc --package ./package.json --readme ./README.md --destination ./documentation *.js plugins/*.js",
-    "test": "./node_modules/.bin/eslint *.js plugins/*.js && ./node_modules/.bin/jscs --preset=google *.js plugins/*.js"
+    "test": "./node_modules/.bin/eslint *.js plugins/*.js"
   },
   "author": {
     "name": "Ward Muylaert",
@@ -20,7 +20,6 @@
     "mathjs": "3.0.0"
   },
   "devDependencies": {
-    "jscs": "*",
     "jsdoc": "*",
     "eslint": "*"
   }
