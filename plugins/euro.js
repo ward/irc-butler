@@ -8,6 +8,7 @@ var $ = require('cheerio');
 var http = require('http');
 
 const groupMatcher = /^!euro ([A-F])$/i;
+const teamMatcher = /^!euro (.+)$/i;
 
 function getGroupInfo(client, to, group) {
   let url = groupToUrl(group);
@@ -91,12 +92,81 @@ function groupToUrl(group) {
   }
 }
 
+/**
+ * Temporary solution, what about reaching next rounds?
+ */
+function teamToGroup(team) {
+  switch (team.toLowerCase()) {
+    case 'albania':
+    case 'france':
+    case 'fra':
+    case 'romania':
+    case 'switzerland':
+      return 'A';
+    case 'england':
+    case 'eng':
+    case 'russia':
+    case 'rus':
+    case 'slovakia':
+    case 'slo':
+    case 'svk':
+    case 'wales':
+    case 'wal':
+    case 'wls':
+      return 'B';
+    case 'germany':
+    case 'ger':
+    case 'deu':
+    case 'northern ireland':
+    case 'nir':
+    case 'nil':
+    case 'poland':
+    case 'pol':
+    case 'ukraine':
+    case 'ukr':
+      return 'C';
+    case 'croatia':
+    case 'cro':
+    case 'czech republic':
+    case 'cze':
+    case 'czr':
+    case 'spain':
+    case 'esp':
+    case 'spa':
+    case 'turkey':
+    case 'tur':
+    case 'turk':
+      return 'D';
+    case 'belgium':
+    case 'bel':
+    case 'italy':
+    case 'ita':
+    case 'republic of ireland':
+    case 'roi':
+    case 'sweden':
+    case 'swe':
+      return 'E';
+    case 'austria':
+    case 'aus':
+    case 'hungary':
+    case 'hun':
+    case 'iceland':
+    case 'ice':
+    case 'portugal':
+    case 'por':
+      return 'F';
+  }
+}
+
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
     let groupMatch = trimmedText.match(groupMatcher);
+    let teamMatch = trimmedText.match(teamMatcher);
     if (groupMatch !== null) {
       getGroupInfo(client, to, groupMatch[1].toUpperCase());
+    } else if (teamMatch !== null) {
+      getGroupInfo(client, to, teamToGroup(teamMatch[1]));
     }
   });
 };
@@ -108,6 +178,10 @@ exports.info = {
     {
       trigger: '!euro GROUP',
       description: 'Show standings for GROUP (A-F)'
+    },
+    {
+      trigger: '!euro TEAM',
+      description: 'Show group for TEAM'
     }
   ]
 };
