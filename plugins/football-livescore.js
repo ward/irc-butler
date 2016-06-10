@@ -47,7 +47,7 @@ class Game {
  * @param {function} failure Callback to be called if it failed. (no arg)
  */
 function fetchLivescore(success, failure) {
-  var livescoreurl = 'http://www.livescore.com/';
+  var livescoreurl = 'http://www.livescore.com/soccer/';
   http.get(livescoreurl, function(response) {
     var data = '';
     response.on('data', function(chunk) {
