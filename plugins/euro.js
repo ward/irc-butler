@@ -8,6 +8,7 @@ var $ = require('cheerio');
 var http = require('http');
 
 const groupMatcher = /^!euro ([A-F])$/i;
+const thirdMatcher = /^!euro (?:3(?:rd)?|third)/i;
 const teamMatcher = /^!euro (.+)$/i;
 
 function getGroupInfo(client, to, group) {
@@ -69,7 +70,7 @@ function parseRow(row) {
     lose: $(cells[6]).text(),
     gf: $(cells[7]).text(),
     ga: $(cells[8]).text(),
-    gd: $(cells[9]).text(),
+    gd: parseInt($(cells[9]).text()),
     points: $(cells[10]).text()
   };
   return res;
@@ -129,6 +130,44 @@ function groupToUrl(group) {
     case 'E': return 'http://int.soccerway.com/international/europe/european-championships/2016-france/group-stage/group-e/g8575/';// eslint-disable-line
     case 'F': return 'http://int.soccerway.com/international/europe/european-championships/2016-france/group-stage/group-f/g8576/';
   }
+}
+
+function makeThirdRanking(client, to) {
+  let url = 'http://int.soccerway.com/international/europe/european-championships/2016-france/group-stage/r31060/';
+  let κ = function(data) {
+    let ranks = parseThirdRanks(data);
+    let out = groupToString({ranks: ranks, games: []})[0];
+    out = out.replace(/3\. /g, '');
+    let criteria = 'Ranked by: pts, goal diff, goal scored. After that would be: fair play, uefa ranking. First four go through.';
+    client.say(to, '[THIRD PLACES] ' + out + criteria);
+  }
+  let fail = function() {
+    client.say(to, 'Error');
+  };
+  fetchGroupPage(url, κ, fail);
+}
+function parseThirdRanks(data) {
+  let loaded = $.load(data);
+
+  let thirds = [];
+  let tables = loaded('table.leaguetable.sortable.table.detailed-table tbody');
+  tables.each(function() {
+    let table = $(this);
+    let rows = $('tr', table);
+    thirds.push(parseRow($(rows[2])));
+  });
+
+  thirds.sort(sortThirdRanks);
+  return thirds;
+}
+function sortThirdRanks(team1, team2) {
+  if (team1.points > team2.points) return -1;
+  if (team1.points < team2.points) return 1;
+  if (team1.gd > team2.gd) return -1;
+  if (team1.gd < team2.gd) return 1;
+  if (team1.gf > team2.gf) return -1;
+  if (team1.gf < team2.gf) return 1;
+  return 0;
 }
 
 /**
@@ -231,9 +270,12 @@ exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
     let groupMatch = trimmedText.match(groupMatcher);
+    let thirdMatch = trimmedText.match(thirdMatcher);
     let teamMatch = trimmedText.match(teamMatcher);
     if (groupMatch !== null) {
       getGroupInfo(client, to, groupMatch[1].toUpperCase());
+    } else if (thirdMatch !== null) {
+      makeThirdRanking(client, to);
     } else if (teamMatch !== null) {
       getGroupInfo(client, to, teamToGroup(teamMatch[1]));
     }
