@@ -76,10 +76,16 @@ function parseRow(row) {
 }
 function parseResultRow(row) {
   let cells = $('td', row);
+  let cleanscore = $(cells[3]).text().trim().replace(/ /g, '');
+  if (cleanscore.indexOf(':') > -1) {
+    let hour = parseInt(cleanscore.substring(0,2));
+    hour = hour - 2;
+    cleanscore = hour + cleanscore.substring(2);
+  }
   let res = {
     date: $(cells[1]).text().trim().replace('/16', ''),
     home: $(cells[2]).text().trim(),
-    score: $(cells[3]).text().trim().replace(/ /g, ''),
+    score: cleanscore,
     away: $(cells[4]).text().trim()
   };
   return res;
