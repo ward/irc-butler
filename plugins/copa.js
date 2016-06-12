@@ -103,7 +103,7 @@ exports.activateOn = function(client) {
   });
 };
 exports.info = {
-  id: 'euro',
+  id: 'copa',
   version: '0.0.1',
   description: 'Copa America Centenario information.',
   commands: [
