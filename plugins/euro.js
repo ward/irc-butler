@@ -15,7 +15,9 @@ function getGroupInfo(client, to, group) {
   let κ = function(data) {
     let parsed = parseGroupPage(data);
     let out = groupToString(parsed);
-    client.say(to, '[GROUP ' + group + '] ' + out);
+    for (let i = 0; i < out.length; i++) {
+      client.say(to, '[GROUP ' + group + '] ' + out[i]);
+    }
   };
   let fail = function() {
     client.say(to, 'Error');
@@ -39,13 +41,22 @@ function fetchGroupPage(url, κ, fail) {
 
 function parseGroupPage(data) {
   let loaded = $.load(data);
+
   let rows = loaded('table.leaguetable.sortable.table.detailed-table tbody tr');
-  let result = [];
+  let rank = [];
   rows.each(function() {
     let row = $(this);
-    result.push(parseRow(row));
+    rank.push(parseRow(row));
   });
-  return result;
+
+  rows = loaded('table.matches tbody tr');
+  let games = [];
+  rows.each(function() {
+    let row = $(this);
+    games.push(parseResultRow(row));
+  });
+
+  return {ranks: rank, games: games};
 }
 function parseRow(row) {
   let cells = $('td', row);
@@ -63,9 +74,23 @@ function parseRow(row) {
   };
   return res;
 }
+function parseResultRow(row) {
+  let cells = $('td', row);
+  let res = {
+    date: $(cells[1]).text().trim().replace('/16', ''),
+    home: $(cells[2]).text().trim(),
+    score: $(cells[3]).text().trim().replace(/ /g, ''),
+    away: $(cells[4]).text().trim()
+  };
+  return res;
+}
 
 function groupToString(parsed) {
-  return parsed.map(oneTeamToString).join('; ');
+  let result = [];
+  result.push(parsed.ranks.map(oneTeamToString).join('; '));
+  result.push(parsed.games.map(oneGameToString).join('; '));
+  result = [result.join(' --- ')];
+  return result;
 }
 function oneTeamToString(team) {
   let result =
@@ -78,6 +103,14 @@ function oneTeamToString(team) {
     team.win + '-' + team.draw + '-' + team.lose +
     ' ' +
     team.gf + '-' + team.ga;
+  return result;
+}
+function oneGameToString(game) {
+  let result = '';
+  if (game.score.search(':') > -1) {
+    result = game.date + ' ';//'(' + game.date + ') ';
+  }
+  result += teamToFIFACode(game.home) + ' ' + game.score + ' ' + teamToFIFACode(game.away);
   return result;
 }
 
@@ -156,6 +189,36 @@ function teamToGroup(team) {
     case 'por':
       return 'F';
   }
+}
+function teamToFIFACode(team) {
+  let t = team.toLowerCase();
+  let info = {
+    'albania': 'ALB',
+    'austria': 'AUT',
+    'belgium': 'BEL',
+    'croatia': 'CRO',
+    'czech republic': 'CZE',
+    'england': 'ENG',
+    'france': 'FRA',
+    'germany': 'GER',
+    'hungary': 'HUN',
+    'iceland': 'ISL',
+    'italy': 'ITA',
+    'northern ireland': 'NIR',
+    'poland': 'POL',
+    'portugal': 'POR',
+    'republic of ir…': 'IRL',
+    'romania': 'ROU',
+    'russia': 'RUS',
+    'slovakia': 'SVK',
+    'spain': 'ESP',
+    'sweden': 'SWE',
+    'switzerland': 'SUI',
+    'turkey': 'TUR',
+    'ukraine': 'UKR',
+    'wales': 'WAL',
+  };
+  return info[t];
 }
 
 exports.activateOn = function(client) {
