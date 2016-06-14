@@ -140,7 +140,7 @@ function makeThirdRanking(client, to) {
     out = out.replace(/3\. /g, '');
     let criteria = 'Ranked by: pts, goal diff, goal scored. After that would be: fair play, uefa ranking. First four go through.';
     client.say(to, '[THIRD PLACES] ' + out + criteria);
-  }
+  };
   let fail = function() {
     client.say(to, 'Error');
   };
@@ -261,7 +261,7 @@ function teamToFIFACode(team) {
     'switzerland': 'SUI',
     'turkey': 'TUR',
     'ukraine': 'UKR',
-    'wales': 'WAL',
+    'wales': 'WAL'
   };
   return info[t];
 }
