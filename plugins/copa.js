@@ -8,7 +8,7 @@ var $ = require('cheerio');
 var http = require('http');
 
 const groupMatcher = /^!copa ([A-D])$/i;
-const finalsMatcher = /^!copa (QF|SF|F)$/i;
+const finalsMatcher = /^!copa (QF|SF|3r?d?|F)(?:inals?)?$/i;
 
 function getGroupInfo(client, to, group) {
   let url = groupToUrl(group);
@@ -94,17 +94,22 @@ function groupToUrl(group) {
 /// Final stages //////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 function getFinalStage(client, to, stage) {
-  // TODO Correct url
-  let url = 'http://int.soccerway.com/international/europe/european-championships/2016-france/s7576/final-stages/';
+  let url = 'http://int.soccerway.com/international/south-america/copa-america/2016-usa/s11927/final-stages/';
   let κ = function (data) {
     let allGames = parseStages(data);
     let relevantGames = null;
     switch (stage.toLowerCase()) {
       case 'qf':
-        relevantGames = allGames.slice(3, 7);
+        relevantGames = allGames.slice(4, 8);
         break;
       case 'sf':
-        relevantGames = allGames.slice(1, 3);
+        relevantGames = allGames.slice(2, 4);
+        break;
+      case '3':
+      case '3r':
+      case '3d':
+      case '3rd':
+        relevantGames = allGames.slice(1, 2);
         break;
       case 'f':
         relevantGames = allGames.slice(0, 1);
@@ -114,7 +119,7 @@ function getFinalStage(client, to, stage) {
         return;
     }
 
-    client.say(to, relevantGames.map(function(g) { return oneGameToString(g); }).join('; '));
+    client.say(to, '[' + stage.toUpperCase() + '] ' + relevantGames.map(function(g) { return oneGameToString(g); }).join('; '));
   };
   let fail = function() {
     client.say(to, 'Error');
@@ -151,6 +156,15 @@ function parseResultRow(row) {
     away: $(cells[4]).text().trim()
   };
   return res;
+}
+
+function oneGameToString(game) {
+  let result = '';
+  if (game.score.search(':') > -1) {
+    result = game.date + ' ';//'(' + game.date + ') ';
+  }
+  result += game.home + ' ' + game.score + ' ' + game.away;
+  return result;
 }
 
 exports.activateOn = function(client) {

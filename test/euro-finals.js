@@ -7,4 +7,4 @@ euro.activateOn(fakeClient);
 fakeClient.triggerMessage('', '', '!euro 8F');
 fakeClient.triggerMessage('', '', '!euro QF');
 fakeClient.triggerMessage('', '', '!euro sF');
-fakeClient.triggerMessage('', '', '!euro F');
+fakeClient.triggerMessage('', '', '!euro Final');

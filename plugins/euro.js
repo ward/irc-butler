@@ -9,7 +9,7 @@ var http = require('http');
 
 const groupMatcher = /^!euro ([A-F])$/i;
 const thirdMatcher = /^!euro (?:3(?:rd)?|third)/i;
-const finalsMatcher = /^!euro (8F|QF|SF|F)$/i;
+const finalsMatcher = /^!euro (8F|QF|SF|F)(?:inals?)?$/i;
 const teamMatcher = /^!euro (.+)$/i;
 
 function getGroupInfo(client, to, group) {
@@ -199,7 +199,7 @@ function getFinalStage(client, to, stage) {
         break;
     }
 
-    client.say(to, relevantGames.map(function(g) { return oneGameToString(g); }).join('; '));
+    client.say(to, '[' + stage.toUpperCase() + '] ' + relevantGames.map(function(g) { return oneGameToString(g); }).join('; '));
   };
   let fail = function() {
     client.say(to, 'Error');
