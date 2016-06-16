@@ -9,6 +9,7 @@ var http = require('http');
 
 const groupMatcher = /^!euro ([A-F])$/i;
 const thirdMatcher = /^!euro (?:3(?:rd)?|third)/i;
+const finalsMatcher = /^!euro (8F|QF|SF|F)$/i;
 const teamMatcher = /^!euro (.+)$/i;
 
 function getGroupInfo(client, to, group) {
@@ -132,6 +133,10 @@ function groupToUrl(group) {
   }
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Third places in groups /////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
 function makeThirdRanking(client, to) {
   let url = 'http://int.soccerway.com/international/europe/european-championships/2016-france/group-stage/r31060/';
   let κ = function(data) {
@@ -168,6 +173,53 @@ function sortThirdRanks(team1, team2) {
   if (team1.gf > team2.gf) return -1;
   if (team1.gf < team2.gf) return 1;
   return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/// Final stages //////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+function getFinalStage(client, to, stage) {
+  let url = 'http://int.soccerway.com/international/europe/european-championships/2016-france/s7576/final-stages/';
+  let κ = function (data) {
+    let allGames = parseStages(data);
+    let relevantGames = null;
+    switch (stage.toLowerCase()) {
+      case '8f':
+        relevantGames = allGames.slice(7);
+        break;
+      case 'qf':
+        relevantGames = allGames.slice(3, 7);
+        break;
+      case 'sf':
+        relevantGames = allGames.slice(1, 3);
+        break;
+      case 'f':
+        relevantGames = allGames.slice(0, 1);
+        break;
+    }
+
+    client.say(to, relevantGames.map(function(g) { return oneGameToString(g); }).join('; '));
+  };
+  let fail = function() {
+    client.say(to, 'Error');
+  };
+  fetchGroupPage(url, κ, fail);
+}
+function parseStages(data) {
+  let loaded = $.load(data);
+
+  let tables = loaded('table.matches tbody');
+  let games = [];
+  tables.each(function() {
+    let table = $(this);
+    let rows = $('tr', table);
+    rows.each(function() {
+      let row = $(this);
+      games.push(parseResultRow(row));
+    });
+  });
+  return games;
 }
 
 /**
@@ -263,7 +315,11 @@ function teamToFIFACode(team) {
     'ukraine': 'UKR',
     'wales': 'WAL'
   };
-  return info[t];
+  if (t in info) {
+    return info[t];
+  } else {
+    return team;
+  }
 }
 
 exports.activateOn = function(client) {
@@ -271,11 +327,14 @@ exports.activateOn = function(client) {
     let trimmedText = text.trim();
     let groupMatch = trimmedText.match(groupMatcher);
     let thirdMatch = trimmedText.match(thirdMatcher);
+    let finalsMatch = trimmedText.match(finalsMatcher);
     let teamMatch = trimmedText.match(teamMatcher);
     if (groupMatch !== null) {
       getGroupInfo(client, to, groupMatch[1].toUpperCase());
     } else if (thirdMatch !== null) {
       makeThirdRanking(client, to);
+    } else if (finalsMatch !== null) {
+      getFinalStage(client, to, finalsMatch[1]);
     } else if (teamMatch !== null) {
       getGroupInfo(client, to, teamToGroup(teamMatch[1]));
     }
