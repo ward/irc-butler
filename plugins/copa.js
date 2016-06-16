@@ -1,6 +1,6 @@
 /**
- * Euro plugin
- * @module plugins/euro
+ * Copa plugin
+ * @module plugins/copa
  */
 'use strict';
 
@@ -8,7 +8,7 @@ var $ = require('cheerio');
 var http = require('http');
 
 const groupMatcher = /^!copa ([A-D])$/i;
-const teamMatcher = /^!euro (.+)$/i;
+const finalsMatcher = /^!copa (QF|SF|F)$/i;
 
 function getGroupInfo(client, to, group) {
   let url = groupToUrl(group);
@@ -90,15 +90,78 @@ function groupToUrl(group) {
   }
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Final stages //////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+function getFinalStage(client, to, stage) {
+  // TODO Correct url
+  let url = 'http://int.soccerway.com/international/europe/european-championships/2016-france/s7576/final-stages/';
+  let κ = function (data) {
+    let allGames = parseStages(data);
+    let relevantGames = null;
+    switch (stage.toLowerCase()) {
+      case 'qf':
+        relevantGames = allGames.slice(3, 7);
+        break;
+      case 'sf':
+        relevantGames = allGames.slice(1, 3);
+        break;
+      case 'f':
+        relevantGames = allGames.slice(0, 1);
+        break;
+      default:
+        client.say(to, 'Error: no such stage found');
+        return;
+    }
+
+    client.say(to, relevantGames.map(function(g) { return oneGameToString(g); }).join('; '));
+  };
+  let fail = function() {
+    client.say(to, 'Error');
+  };
+  fetchGroupPage(url, κ, fail);
+}
+function parseStages(data) {
+  let loaded = $.load(data);
+
+  let tables = loaded('table.matches tbody');
+  let games = [];
+  tables.each(function() {
+    let table = $(this);
+    let rows = $('tr', table);
+    rows.each(function() {
+      let row = $(this);
+      games.push(parseResultRow(row));
+    });
+  });
+  return games;
+}
+function parseResultRow(row) {
+  let cells = $('td', row);
+  let cleanscore = $(cells[3]).text().trim().replace(/ /g, '');
+  if (cleanscore.indexOf(':') > -1) {
+    let hour = parseInt(cleanscore.substring(0,2));
+    hour = hour - 2;
+    cleanscore = hour + cleanscore.substring(2);
+  }
+  let res = {
+    date: $(cells[1]).text().trim().replace('/16', ''),
+    home: $(cells[2]).text().trim(),
+    score: cleanscore,
+    away: $(cells[4]).text().trim()
+  };
+  return res;
+}
+
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
     let groupMatch = trimmedText.match(groupMatcher);
-    let teamMatch = trimmedText.match(teamMatcher);
+    let finalsMatch = trimmedText.match(finalsMatcher);
     if (groupMatch !== null) {
       getGroupInfo(client, to, groupMatch[1].toUpperCase());
-    } else if (teamMatch !== null) {
-      //getGroupInfo(client, to, teamToGroup(teamMatch[1]));
+    } else if (finalsMatch !== null) {
+      getFinalStage(client, to, finalsMatch[1]);
     }
   });
 };
