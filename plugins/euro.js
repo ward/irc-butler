@@ -342,7 +342,7 @@ exports.activateOn = function(client) {
 };
 exports.info = {
   id: 'euro',
-  version: '0.0.1',
+  version: '0.0.2',
   description: 'Euro 2016 information.',
   commands: [
     {
@@ -352,6 +352,10 @@ exports.info = {
     {
       trigger: '!euro TEAM',
       description: 'Show group for TEAM'
+    },
+    {
+      trigger: '!euro (8F|QF|SF|F)inal',
+      description: 'Show the games in the round of 16, quarterfinals, semifinals, or finals.'
     }
   ]
 };

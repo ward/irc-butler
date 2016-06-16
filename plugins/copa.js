@@ -181,16 +181,16 @@ exports.activateOn = function(client) {
 };
 exports.info = {
   id: 'copa',
-  version: '0.0.1',
+  version: '0.0.2',
   description: 'Copa America Centenario information.',
   commands: [
     {
       trigger: '!copa GROUP',
-      description: 'Show standings for GROUP (A-D)'
-    }/*,
+      description: 'Show standings for GROUP (A-D).'
+    },
     {
-      trigger: '!euro TEAM',
-      description: 'Show group for TEAM'
-    }*/
+      trigger: '!copa (QF|SF|3rd|F)',
+      description: 'Show the games in the quarterfinals, semifinals, third place game, or final.'
+    }
   ]
 };
