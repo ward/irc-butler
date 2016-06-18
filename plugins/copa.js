@@ -143,7 +143,10 @@ function parseStages(data) {
 }
 function parseResultRow(row) {
   let cells = $('td', row);
-  let cleanscore = $(cells[3]).text().trim().replace(/ /g, '');
+  // There can be additions, but they are there on both sides, hidden by styling...
+  // So remove those not visible and get it over with
+  $(cells[3]).find('span.score-addition').not('.addition-visible').remove();
+  let cleanscore = $(cells[3]).text().trim().replace(/ |\n/g, '');
   if (cleanscore.indexOf(':') > -1) {
     let hour = parseInt(cleanscore.substring(0,2));
     hour = hour - 2;
