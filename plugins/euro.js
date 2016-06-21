@@ -9,7 +9,7 @@ var http = require('http');
 
 const groupMatcher = /^!euro ([A-F])$/i;
 const thirdMatcher = /^!euro (?:3(?:rd)?|third)/i;
-const finalsMatcher = /^!euro (8F|QF|SF|F)(?:inals?)?$/i;
+const finalsMatcher = /^!euro (?:R?(16)|(8F|QF|SF|F)(?:inals?)?)$/i;
 const teamMatcher = /^!euro (.+)$/i;
 
 function getGroupInfo(client, to, group) {
@@ -189,6 +189,8 @@ function getFinalStage(client, to, stage) {
     let relevantGames = null;
     switch (stage.toLowerCase()) {
       case '8f':
+      case '16':
+      case 'r16':
         relevantGames = allGames.slice(7);
         break;
       case 'qf':
@@ -337,7 +339,7 @@ exports.activateOn = function(client) {
     } else if (thirdMatch !== null) {
       makeThirdRanking(client, to);
     } else if (finalsMatch !== null) {
-      getFinalStage(client, to, finalsMatch[1]);
+      getFinalStage(client, to, finalsMatch[1] || finalsMatch[2]);
     } else if (teamMatch !== null) {
       getGroupInfo(client, to, teamToGroup(teamMatch[1]));
     }
