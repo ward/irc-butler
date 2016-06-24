@@ -11,3 +11,4 @@ fakeClient.triggerMessage('', '', '!euro C');
 //fakeClient.triggerMessage('', '', '!euro bel');
 //fakeClient.triggerMessage('', '', '!euro POR');
 fakeClient.triggerMessage('', '', '!euro 3');
+fakeClient.triggerMessage('', '', '!euro sdilfH');

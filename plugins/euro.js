@@ -14,6 +14,7 @@ const teamMatcher = /^!euro (.+)$/i;
 
 function getGroupInfo(client, to, group) {
   let url = groupToUrl(group);
+  if (url === undefined) return;
   let κ = function(data) {
     let parsed = parseGroupPage(data);
     let out = groupToString(parsed);
