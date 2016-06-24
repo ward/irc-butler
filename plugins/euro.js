@@ -117,12 +117,10 @@ function oneTeamToString(team) {
   return result;
 }
 function oneGameToString(game) {
-  let result = '';
   if (game.score.search(':') > -1) {
-    result = game.date + ' ';//'(' + game.date + ') ';
+    return game.date + ' ' + game.score + ' ' + teamToFIFACode(game.home) + '-' + teamToFIFACode(game.away);
   }
-  result += teamToFIFACode(game.home) + ' ' + game.score + ' ' + teamToFIFACode(game.away);
-  return result;
+  return teamToFIFACode(game.home) + ' ' + game.score + ' ' + teamToFIFACode(game.away);
 }
 
 function groupToUrl(group) {
