@@ -7,5 +7,12 @@
     ],
     "userName": "butler",
     "realName": "Your butler for a nice IRC experience"
+  },
+  "bot": {
+    "plugins": [
+      "football",
+      "calc",
+      "time"
+    ]
   }
 }

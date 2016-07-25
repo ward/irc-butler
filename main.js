@@ -5,11 +5,10 @@ var config = require('config');
 var plugins = require('./plugins.js');
 
 // Plugins
-const football = require('./plugins/football.js');
-const calc = require('./plugins/calc.js');
-const time = require('./plugins/time.js');
-const euro = require('./plugins/euro.js');
-const copa = require('./plugins/copa.js');
+const pluginlist = config.get('bot.plugins');
+for (var i = 0; i < pluginlist.length; i++) {
+  pluginlist[i] = require('./plugins/' + pluginlist[i] + '.js');
+}
 
 /* Start the connection. */
 var client = new irc.Client(
@@ -32,8 +31,6 @@ client.addListener('message#', function(nick, to, text, _raw) {
 
 plugins.enablePlugins(client);
 
-client.plugins.add(football);
-client.plugins.add(calc);
-client.plugins.add(time);
-client.plugins.add(euro);
-client.plugins.add(copa);
+for (var i = 0; i < pluginlist.length; i++) {
+  client.plugins.add(pluginlist[i]);
+}
