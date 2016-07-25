@@ -103,6 +103,7 @@ function parseLivescore(data) {
       games[country][competition].push(game);
     }
   });
+  Object.freeze(games);
 }
 
 /**
