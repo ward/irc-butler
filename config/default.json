@@ -12,7 +12,8 @@
     "plugins": [
       "football",
       "calc",
-      "time"
+      "time",
+      "fantasypl"
     ]
   }
 }
