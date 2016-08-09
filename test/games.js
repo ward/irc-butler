@@ -6,3 +6,4 @@ let fakeClient = require('./fakeClient.js').fakeClient;
 football.activateOn(fakeClient);
 
 fakeClient.triggerMessage('', '', '!games');
+fakeClient.triggerMessage('', '', '!games England');
