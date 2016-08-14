@@ -21,6 +21,24 @@ function showNewEntries(id, client, target) {
   fetchLeagueClassicStandings(id, κ, κfail);
 }
 
+function showStandings(id, client, target) {
+  let κ = function(res) {
+    // results is an array of the fpl teams
+    let results = res['standings']['results'];
+    let name = res['league']['name'];
+    let entryToText = function(entry, idx) {
+      return '(' + (idx+1) + ') ' + entry.entry_name + ' ' + entry.total + 'pts';
+    };
+    let output = results.slice(0, 10).map(entryToText).join(' ');
+    output = '[' + name + '] ' + output;
+    client.say(target, output);
+  };
+  let κfail = function(err) {
+    client.say(target, 'Something went wrong --- ' + err);
+  };
+  fetchLeagueClassicStandings(id, κ, κfail);
+}
+
 function fetchLeagueClassicStandings(id, κ, κfail) {
   const url = 'https://fantasy.premierleague.com/drf/leagues-classic-standings/'
               + id;
@@ -44,20 +62,20 @@ function fetchLeagueClassicStandings(id, κ, κfail) {
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, message) {
     message = message.trim();
-    if (message === '!fpl') {
+    if (message.search(/^!fpl$/i) > -1) {
       // Default action. Before starting probably "new entries"
-      showNewEntries(2191, client, to);
+      showStandings(2191, client, to);
     }
   });
 };
 exports.info = {
   id: 'fantasypl',
-  version: '0.0.1',
+  version: '0.0.2',
   description: 'Fantasy Premier League.',
   commands: [
     {
       trigger: '!fpl',
-      description: 'Shows the new entries for the #reddit-soccer league.'
+      description: 'Shows the rankings for the #reddit-soccer league.'
     }
   ]
 };
