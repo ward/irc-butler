@@ -15,7 +15,7 @@ function showStandings(id, client, target) {
     let entryToText = function(entry, idx) {
       return '(' + entry.rank + ') ' + entry.entry_name + ' ' + entry.total + 'pts';
     };
-    let output = results.slice(0, 10).map(entryToText).join(' ');
+    let output = results.slice(0, 15).map(entryToText).join(' ');
     output = '[' + name + '] ' + output;
     client.say(target, output);
   };
