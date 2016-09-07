@@ -12,7 +12,7 @@ function showStandings(id, client, target) {
     // results is an array of the fpl teams
     let results = res['standings']['results'];
     let name = res['league']['name'];
-    let entryToText = function(entry, idx) {
+    let entryToText = function(entry, _idx) {
       return '(' + entry.rank + ') ' + entry.entry_name + ' ' + entry.total + 'pts';
     };
     let output = results.slice(0, 15).map(entryToText).join(' ');
@@ -42,7 +42,7 @@ function fetchLeagueClassicStandings(id, κ, κfail) {
     }
   }).on('error', function() {
     κfail('https.get() error');
-  })
+  });
 }
 
 exports.activateOn = function(client) {

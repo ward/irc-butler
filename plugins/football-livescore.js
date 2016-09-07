@@ -6,7 +6,7 @@
 'use strict';
 
 var util = require('util');
-var $ = require('cheerio');
+//var $ = require('cheerio');
 var http = require('http');
 
 /** How long the data should be cached in milliseconds. */
@@ -158,7 +158,7 @@ var CryptUtil = function() {
       case 3:
         return a == d.ch0 && b == d.ch1 && c == d.ch2;
       default:
-        return !1
+        return !1;
     }
   }
 
@@ -218,7 +218,7 @@ var CryptUtil = function() {
                   2)), a(t, s, r, d) ? (q += String.fromCharCode(10), h -= d.length - 1) : a(t, s,
                   r, e) ? (q += String.fromCharCode(13), h -= e.length - 1) : a(t, s, r, f) ? (q +=
                     String.fromCharCode(32), h -= f.length - 1) : q += b.charAt(v));
-        return q
+        return q;
   }
 
   function c(a) {
@@ -228,19 +228,19 @@ var CryptUtil = function() {
           .charCodeAt(0)) + d(a.charCodeAt(1)) + d(a.charCodeAt(2)) + d(a.charCodeAt(3)) +
         d(a.charCodeAt(5)) + d(a.charCodeAt(6)) + d(a.charCodeAt(8)) + d(a.charCodeAt(9)) + e +
         d(a.charCodeAt(12)) + d(a.charCodeAt(14)) + d(a.charCodeAt(15)) + b + c, c >= b ? f =
-        f + c - b : f += 3 * (e + 1), f
+        f + c - b : f += 3 * (e + 1), f;
     } catch (g) {
-      return 27
+      return 27;
     }
   }
 
   function d(a) {
     if (a >= 48 && 57 >= a) return a - 48;
-    throw "char value is not a number character"
+    throw "char value is not a number character";
   }
   return {
     decrypt: b
-  }
+  };
 }();
 
 /**

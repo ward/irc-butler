@@ -31,6 +31,6 @@ client.addListener('message#', function(nick, to, text, _raw) {
 
 plugins.enablePlugins(client);
 
-for (var i = 0; i < pluginlist.length; i++) {
-  client.plugins.add(pluginlist[i]);
+for (var j = 0; j < pluginlist.length; j++) {
+  client.plugins.add(pluginlist[j]);
 }
