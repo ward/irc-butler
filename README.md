@@ -1,8 +1,11 @@
 # Installation
 
 * Install nvm: `brew nvm` (or whatever fits your system).
-* Install node: `nvm install 5.7.0` (or whichever version is mentioned in `.nvmrc`)
+* Install node: `nvm install 6.5.0` (or whichever version is mentioned in `.nvmrc`)
 * Install dependencies: `npm install` (npm was installed together with node)
+* I tend to need to also explicitly
+    * `npm install node-icu-charset-detector`
+    * `npm install iconv`
 
 Error when installing the `irc` dependency can be fixed by doing
 
@@ -33,10 +36,9 @@ Edit `main.js` with your IRC information.
 
 # Testing
 
-No proper test unit yet, so will have to make do with jshint and jscs to check
-your code out a bit. Currently run with
+Testing and linting with
 
-    nvm test
+    npm test
 
 # Documentation
 
