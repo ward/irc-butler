@@ -14,7 +14,14 @@
       "calc",
       "time",
       "fantasypl",
-      "retake-name"
-    ]
+      "retake-name",
+      "twitter"
+    ],
+    "twitter": {
+      "consumerKey": null,
+      "consumerSecret": null,
+      "accessToken": null,
+      "accessTokenSecret": null
+    }
   }
 }
