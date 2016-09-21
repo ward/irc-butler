@@ -15,7 +15,8 @@
       "time",
       "fantasypl",
       "retake-name",
-      "twitter"
+      "twitter",
+      "strava"
     ],
     "twitter": {
       "consumerKey": null,

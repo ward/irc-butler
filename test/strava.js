@@ -8,5 +8,6 @@ strava.activateOn(fakeClient);
 //fakeClient.triggerMessage('', '', 'https://www.strava.com/athletes/1091838');
 //fakeClient.triggerMessage('', '', 'https://www.strava.com/athletes/2232601');
 
-//strava.getClubLeaderboard('freenode_running');
 fakeClient.triggerMessage('','', 'https://www.strava.com/clubs/freenode_running');
+fakeClient.triggerMessage('', '', 'https://www.strava.com/clubs/sqwheodabvlbcsdf');
+fakeClient.triggerMessage('','','https://www.strava.com/clubs/CenturianRunners');

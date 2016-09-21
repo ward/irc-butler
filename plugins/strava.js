@@ -16,15 +16,30 @@ for (let key in stravaconfig) {
   }
 }
 
+function getClub(id, success) {
+  let url = 'https://www.strava.com/api/v3/clubs/' + id + '?access_token=' + stravaconfig.access_token;
+  request(url, function(err, response, body) {
+    if (response.statusCode === 200) {
+      let club = JSON.parse(body);
+      let res = club.name + ', a ';
+      res += club.sport_type + ' club with ';
+      res += club.member_count + ' members. ';
+      success(res);
+    }
+  });
+}
+
 function getClubLeaderboard(id, success) {
   let url = 'https://www.strava.com/clubs/' + id + '/leaderboard';
   request(url, function(err, response, body) {
     let leaderboard = JSON.parse(body).data;
-    success(
-      leaderboard
-        .slice(0,5)
-        .map((v, idx) => '('+(idx+1)+') ' + formatClubLeaderboardAthlete(v))
-        .join(' '));
+    if (leaderboard.length !== 0) {
+      success(
+        leaderboard
+          .slice(0,5)
+          .map((v, idx) => '['+(idx+1)+'] ' + formatClubLeaderboardAthlete(v))
+          .join(' '));
+    }
   });
 }
 function formatClubLeaderboardAthlete(a) {
@@ -78,9 +93,13 @@ exports.activateOn = function(client) {
     let clubid = text.match(clubRegex);
     if (clubid !== null) {
       let success = function(result) {
-        client.say(to, result);
+        client.say(to, '[STRAVA]' + ' ' + result);
+        let success = function(result) {
+          client.say(to, '[STRAVA]' + ' ' + result);
+        };
+        getClubLeaderboard(clubid[1], success);
       };
-      getClubLeaderboard(clubid[1], success);
+      getClub(clubid[1], success);
     }
   });
 };
