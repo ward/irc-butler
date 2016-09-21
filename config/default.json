@@ -23,6 +23,9 @@
       "consumerSecret": null,
       "accessToken": null,
       "accessTokenSecret": null
+    },
+    "strava": {
+      "access_token": null
     }
   }
 }
