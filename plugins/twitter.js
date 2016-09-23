@@ -4,9 +4,6 @@ let config = require('config');
 
 let Twitter = require('twitter-node-client').Twitter;
 
-// TODO: config file needs restructuring to allow config for plugins
-// this solution is ugly
-// TODO: Should failure to load a plugin halt the entire bot?
 let twitterconfig = config.get('bot.twitter');
 for (let key in twitterconfig) {
   if (twitterconfig[key] === null || twitterconfig[key] === undefined) {
@@ -37,7 +34,7 @@ exports.activateOn = function(client) {
       return;
     }
     let fail = function(err, response, body) {
-      console.error('Failed to get tweet info')
+      console.error('Failed to get tweet info');
       console.error(err);
       console.error(response);
       console.error(body);

@@ -1,14 +1,11 @@
 'use strict';
 
 let config = require('config');
-let http = require('https');
 
 let request = require('request');
 
-// TODO: config file needs restructuring to allow config for plugins
-// this solution is ugly
-// TODO: Should also be standardised usage/checks
-// TODO: Should failure to load a plugin halt the entire bot?
+let utils = require('../utils.js');
+
 let stravaconfig = config.get('bot.strava');
 for (let key in stravaconfig) {
   if (stravaconfig[key] === null || stravaconfig[key] === undefined) {
@@ -43,7 +40,7 @@ function getClubLeaderboard(id, success) {
   });
 }
 function formatClubLeaderboardAthlete(a) {
-  let res = formatText(a.athlete_firstname + ' ' + a.athlete_lastname, 'bold');
+  let res = utils.formatText(a.athlete_firstname + ' ' + a.athlete_lastname, 'bold');
   let km = Math.floor(a.distance / 100) / 10;
   res += ' ' + km + 'km (↑' + Math.round(a.elev_gain) + 'm) in ';
   res += formatTime(a.moving_time) + ' (' + formatTime(a.moving_time / (a.distance / 1000)) + '/km)';
@@ -67,26 +64,8 @@ function formatTime(secs) {
   }
 }
 
-/**
- * Takes some text and formats it for IRC.
- *
- * @param {String} text The text to format.
- * @param {String} how The type of formatting to apply.
- */
-function formatText(text, how) {
-  var controlCode = '\u0003';
-  var resetCode = '\u000f';
-  if (how === 'reverse') {
-    return controlCode + '\u0016' + text + resetCode;
-  } else if (how === 'bold') {
-    return controlCode + '\u0002' + text + resetCode;
-  } else {
-    throw new Error('Incorrect formatting');
-  }
-}
-
 const clubRegex = /https?:\/\/www\.strava\.com\/clubs\/(\w+)/;
-const athleteRegex = /https?:\/\/www\.strava\.com\/athletes\/(\d+)/;
+//const athleteRegex = /https?:\/\/www\.strava\.com\/athletes\/(\d+)/;
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {

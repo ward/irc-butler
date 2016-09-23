@@ -8,7 +8,6 @@ let config = require('config');
 const nick = config.get('irc.nick');
 
 // Configure this plugin to check every CHECK_EVERY seconds
-// TODO: Move this to the configuration settings?
 const CHECK_EVERY = 10 * 60 * 1000;
 
 // Keeps track of when we last attempted to retake our nick
@@ -26,7 +25,9 @@ function check_done() {
 }
 
 exports.activateOn = function(client) {
-  client.addListener('message', function(from, to, text) {
+  // Check every message
+  client.addListener('message', function(from, to, _text) {
+    // If we havent recently checked
     if (client.nick !== nick && time_to_check()) {
       check_done();
       // Get rid of this counter if it was set before. Used by the framework

@@ -5,6 +5,7 @@
 'use strict';
 
 const LS = require('./football-livescore.js');
+const utils = require('../utils.js');
 
 function doCountries(client, target) {
   function callback(countries) {
@@ -118,32 +119,14 @@ function doAllFromCountry(country, client, target) {
 function gamesToString(games) {
   var result = '';
   for (let country of Object.keys(games)) {
-    result += formatText('<' + country.toUpperCase() + '>', 'reverse') + ' ';
+    result += utils.formatText('<' + country.toUpperCase() + '>', 'reverse') + ' ';
     for (let competition of Object.keys(games[country])) {
-      result += formatText('[' + competition + ']', 'bold') + ' ';
+      result += utils.formatText('[' + competition + ']', 'bold') + ' ';
       let _games = games[country][competition].join(' ');
       result += _games + ' ';
     }
   }
   return result;
-}
-
-/**
- * Takes some text and formats it for IRC.
- *
- * @param {String} text The text to format.
- * @param {String} how The type of formatting to apply.
- */
-function formatText(text, how) {
-  var controlCode = '\u0003';
-  var resetCode = '\u000f';
-  if (how === 'reverse') {
-    return controlCode + '\u0016' + text + resetCode;
-  } else if (how === 'bold') {
-    return controlCode + '\u0002' + text + resetCode;
-  } else {
-    throw new Error('Incorrect formatting');
-  }
 }
 
 const gameTrigger = /^!game/i;
