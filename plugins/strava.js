@@ -1,7 +1,6 @@
 'use strict';
 
 let config = require('config');
-
 let request = require('request');
 
 let utils = require('../utils.js');
@@ -16,7 +15,7 @@ for (let key in stravaconfig) {
 function getClub(id, success) {
   let url = 'https://www.strava.com/api/v3/clubs/' + id + '?access_token=' + stravaconfig.access_token;
   request(url, function(err, response, body) {
-    if (response.statusCode === 200) {
+    if (err === null && response.statusCode === 200) {
       let club = JSON.parse(body);
       let res = club.name + ', a ';
       res += club.sport_type + ' club with ';
@@ -29,13 +28,15 @@ function getClub(id, success) {
 function getClubLeaderboard(id, success) {
   let url = 'https://www.strava.com/clubs/' + id + '/leaderboard';
   request(url, function(err, response, body) {
-    let leaderboard = JSON.parse(body).data;
-    if (leaderboard.length !== 0) {
-      success(
-        leaderboard
-          .slice(0,5)
-          .map((v, idx) => '['+(idx+1)+'] ' + formatClubLeaderboardAthlete(v))
-          .join(' '));
+    if (err === null && response.statusCode === 200) {
+      let leaderboard = JSON.parse(body).data;
+      if (leaderboard.length !== 0) {
+        success(
+          leaderboard
+            .slice(0,5)
+            .map((v, idx) => '['+(idx+1)+'] ' + formatClubLeaderboardAthlete(v))
+            .join(' '));
+      }
     }
   });
 }
@@ -69,16 +70,20 @@ const clubRegex = /https?:\/\/www\.strava\.com\/clubs\/(\w+)/;
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
-    let clubid = text.match(clubRegex);
-    if (clubid !== null) {
+    let sayClub = function(result) {
+      client.say(to, '[STRAVA]' + ' ' + result);
       let success = function(result) {
         client.say(to, '[STRAVA]' + ' ' + result);
-        let success = function(result) {
-          client.say(to, '[STRAVA]' + ' ' + result);
-        };
-        getClubLeaderboard(clubid[1], success);
       };
-      getClub(clubid[1], success);
+      getClubLeaderboard(clubid[1], success);
+    };
+    if (text.match(/^!strava/)) {
+      client.say(to, 'Freenode\'s Strava running club: https://www.strava.com/clubs/freenode_running');
+      getClub('freenode_running', sayClub);
+    }
+    let clubid = text.match(clubRegex);
+    if (clubid !== null) {
+      getClub(clubid[1], sayClub);
     }
   });
 };

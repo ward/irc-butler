@@ -11,3 +11,4 @@ strava.activateOn(fakeClient);
 fakeClient.triggerMessage('','', 'https://www.strava.com/clubs/freenode_running');
 fakeClient.triggerMessage('', '', 'https://www.strava.com/clubs/sqwheodabvlbcsdf');
 fakeClient.triggerMessage('','','https://www.strava.com/clubs/CenturianRunners');
+fakeClient.triggerMessage('','','!strava');
