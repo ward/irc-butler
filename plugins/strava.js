@@ -1,3 +1,7 @@
+/**
+ * Strava plugin
+ * @module plugins/strava
+ */
 'use strict';
 
 let config = require('config');
@@ -68,22 +72,30 @@ function formatTime(secs) {
 const clubRegex = /https?:\/\/www\.strava\.com\/clubs\/(\w+)/;
 //const athleteRegex = /https?:\/\/www\.strava\.com\/athletes\/(\d+)/;
 
+/**
+ * Adds listener to client to:
+ *
+ * - Show freenode running club on !strava command
+ * - Show strava club info when a club's url is linked in chat
+ */
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
-    let sayClub = function(result) {
-      client.say(to, '[STRAVA]' + ' ' + result);
-      let success = function(result) {
+    let sayClub = function(clubid) {
+      return function(result) {
         client.say(to, '[STRAVA]' + ' ' + result);
+        let success = function(result) {
+          client.say(to, '[STRAVA]' + ' ' + result);
+        };
+        getClubLeaderboard(clubid, success);
       };
-      getClubLeaderboard(clubid[1], success);
     };
     if (text.match(/^!strava/)) {
       client.say(to, 'Freenode\'s Strava running club: https://www.strava.com/clubs/freenode_running');
-      getClub('freenode_running', sayClub);
+      getClub('freenode_running', sayClub('freenode_running'));
     }
     let clubid = text.match(clubRegex);
     if (clubid !== null) {
-      getClub(clubid[1], sayClub);
+      getClub(clubid[1], sayClub(clubid[1]));
     }
   });
 };

@@ -24,6 +24,9 @@ function addPlugin(plugin) {
   plugin.activateOn(client);
 }
 
+/**
+ * Adds a listener to the client parameter that handles !help messages.
+ */
 function enableHelp(client) {
   client.addListener('message#', function(from, to, text) {
     if (text.startsWith('!help')) {
@@ -78,6 +81,13 @@ function enableHelp(client) {
   });
 }
 
+/**
+ * Adds plugin features to an IRC client object. After application, the client
+ * supports
+ *
+ * .plugins.add: Adds a given plugin
+ * .plugins.plugins: List of info for loaded plugins
+ */
 exports.enablePlugins = function(client) {
   // Need a reference to the enclosing one
   client.plugins = {client: client};

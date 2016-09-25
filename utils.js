@@ -1,3 +1,7 @@
+/**
+ * Utils library, provides various uncategorised things
+ * @module utils
+ */
 'use strict';
 
 /**
