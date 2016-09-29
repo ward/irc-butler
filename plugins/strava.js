@@ -69,7 +69,34 @@ function formatTime(secs) {
   }
 }
 
+function getSegment(id, success) {
+  let url = 'https://www.strava.com/api/v3/segments/' + id + '?access_token=' + stravaconfig.access_token;
+  request(url, function(err, response, body) {
+    if (err === null && response.statusCode === 200) {
+      let segment = JSON.parse(body);
+      console.log(segment);
+      let result = '"' + segment.name + '", ' + segment.activity_type + ' of ';
+      result += (Math.floor(segment.distance / 100) / 10) + 'km @ ';
+      result += segment.average_grade + '%. ';
+      result += segment.effort_count + ' attempts by ' + segment.athlete_count + ' athletes. ';
+      result += 'Located in ' + segment.city + ', ' + segment.state + ', ' + segment.country + '.';
+      success(result);
+    }
+  });
+}
+function getSegmentLeaders(id) {
+  let url = 'https://www.strava.com/api/v3/segments/' + id + '/leaderboard?access_token=' + stravaconfig.access_token + '&page=1&per_page=1';
+  let murl = url + '&gender=M';
+  request(murl, function(err, response, body) {
+    if (err === null && response.statusCode === 200) {
+      console.log(JSON.parse(body));
+    }
+  });
+}
+exports.xx = getSegmentLeaders;
+
 const clubRegex = /https?:\/\/www\.strava\.com\/clubs\/(\w+)/;
+const segmentRegex = /https?:\/\/www\.strava\.com\/segments\/(\d+)/;
 //const athleteRegex = /https?:\/\/www\.strava\.com\/athletes\/(\d+)/;
 
 /**
@@ -96,6 +123,12 @@ exports.activateOn = function(client) {
     let clubid = text.match(clubRegex);
     if (clubid !== null) {
       getClub(clubid[1], sayClub(clubid[1]));
+    }
+    let segmentid = text.match(segmentRegex);
+    if (segmentid !== null) {
+      getSegment(segmentid[1], function(result) {
+        client.say(to, '[STRAVA SEGMENT] ' + result);
+      });
     }
   });
 };
