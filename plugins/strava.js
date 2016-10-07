@@ -31,9 +31,21 @@ function getClub(id, success) {
 
 function getClubLeaderboard(id, success) {
   let url = 'https://www.strava.com/clubs/' + id + '/leaderboard';
-  request(url, function(err, response, body) {
+  let options = {
+    url: url,
+    headers: {
+      'Accept': 'text/javascript, application/javascript, application/ecmascript, application/x-ecmascript',
+    }
+  };
+  request(options, function(err, response, body) {
     if (err === null && response.statusCode === 200) {
-      let leaderboard = JSON.parse(body).data;
+      let leaderboard;
+      try {
+        leaderboard = JSON.parse(body).data;
+      } catch(e) {
+        console.warn(e);
+        return;
+      }
       if (leaderboard.length !== 0) {
         success(
           leaderboard
