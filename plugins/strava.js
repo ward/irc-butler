@@ -23,7 +23,7 @@ function getClub(id, success) {
       let club = JSON.parse(body);
       let res = club.name + ', a ';
       res += club.sport_type + ' club with ';
-      res += club.member_count + ' members. ';
+      res += club.member_count + ' members.';
       success(res);
     }
   });
@@ -119,9 +119,13 @@ const segmentRegex = /https?:\/\/www\.strava\.com\/segments\/(\d+)/;
  */
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
-    let sayClub = function(clubid) {
+    let sayClub = function(clubid, withlink=false) {
       return function(result) {
-        client.say(to, '[STRAVA]' + ' ' + result);
+        let text = '[STRAVA]' + ' ' + result;
+        if (withlink) {
+          text += ' https://www.strava.com/clubs/' + clubid;
+        }
+        client.say(to, text);
         let success = function(result) {
           client.say(to, '[STRAVA]' + ' ' + result);
         };
@@ -129,8 +133,7 @@ exports.activateOn = function(client) {
       };
     };
     if (text.match(/^!strava/)) {
-      client.say(to, 'Freenode\'s Strava running club: https://www.strava.com/clubs/freenode_running');
-      getClub('freenode_running', sayClub('freenode_running'));
+      getClub('freenode_running', sayClub('freenode_running', true));
     }
     let clubid = text.match(clubRegex);
     if (clubid !== null) {

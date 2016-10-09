@@ -10,9 +10,9 @@ strava.activateOn(fakeClient);
 
 //fakeClient.triggerMessage('','', 'https://www.strava.com/clubs/freenode_running');
 //fakeClient.triggerMessage('', '', 'https://www.strava.com/clubs/sqwheodabvlbcsdf');
-//fakeClient.triggerMessage('','','https://www.strava.com/clubs/CenturianRunners');
-//fakeClient.triggerMessage('','','!strava');
+fakeClient.triggerMessage('','','https://www.strava.com/clubs/CenturianRunners');
+fakeClient.triggerMessage('','','!strava');
 
 //fakeClient.triggerMessage('', '', 'https://www.strava.com/segments/13116188');
-strava.xx(13116188)
-strava.xx(229781)
+//strava.xx(13116188)
+//strava.xx(229781)
