@@ -18,3 +18,9 @@ fakeClient.triggerMessage('', '', '!mile 20');
 
 fakeClient.triggerMessage('', '', '!kg 20');
 fakeClient.triggerMessage('', '', '!lbs 20');
+
+fakeClient.triggerMessage('', '', '!cm 5\'1"');
+fakeClient.triggerMessage('', '', '!cm 5\'1');
+fakeClient.triggerMessage('', '', '!cm 5\' 1.25');
+
+fakeClient.triggerMessage('', '', '!ft 155');
