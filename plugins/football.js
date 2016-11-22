@@ -166,7 +166,10 @@ exports.activateOn = function(client) {
     } else if (message.search(bundesShortcut) > -1) {
       doGames('Germany', 'Bundesliga', client, to);
     } else if (message.search(mlsShortcut) > -1) {
-      doGames('USA', 'Major League Soccer', client, to);
+      // Use search here instead of doGames since MLS can also have playoffs.
+      // These playoffs are in USA>Major League Soccer:: play-off
+      doSearch('Major League Soccer', client, to);
+      //doGames('USA', 'Major League Soccer', client, to);
     } else if (competitionmatch !== null) {
       doGames(competitionmatch[1], competitionmatch[2], client, to);
     } else if (countrymatch !== null) {
