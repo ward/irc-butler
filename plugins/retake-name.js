@@ -26,7 +26,7 @@ function check_done() {
 
 exports.activateOn = function(client) {
   // Check every message
-  client.addListener('message', function(from, to, _text) {
+  client.addListener('message', function(_from, _to, _text) {
     // If we havent recently checked
     if (client.nick !== nick && time_to_check()) {
       check_done();

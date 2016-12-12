@@ -40,7 +40,7 @@ function enableHelp(client) {
         client.say(to, reply);
       } else if (query.length === 1) {
         // Find the plugin
-        let plugin = this.plugins.plugins.find(function(ele, idx, _arr) {
+        let plugin = this.plugins.plugins.find(function(ele, _idx, _arr) {
           return ele.id === query[0];
         });
         if (plugin === undefined) {
@@ -58,7 +58,7 @@ function enableHelp(client) {
         client.say(to, reply);
       } else if (query.length === 2) {
         // Find the plugin
-        let plugin = this.plugins.plugins.find(function(ele, idx, _arr) {
+        let plugin = this.plugins.plugins.find(function(ele, _idx, _arr) {
           return ele.id === query[0];
         });
         if (plugin === undefined) {
