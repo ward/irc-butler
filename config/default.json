@@ -1,4 +1,5 @@
 {
+  "debug": true,
   "irc": {
     "network": "irc.freenode.net",
     "nick": "test-butler",

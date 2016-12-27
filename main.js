@@ -16,7 +16,7 @@ var client = new irc.Client(
   config.get('irc.nick'),
   {
     channels: config.get('irc.channels'),
-    debug: true,
+    debug: config.get('debug'),
     encoding: 'utf-8',
     floodProtection: true,
     userName: config.get('irc.userName'),
