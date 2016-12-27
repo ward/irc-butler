@@ -58,7 +58,7 @@ function getClubLeaderboard(id, success) {
 }
 function formatClubLeaderboardAthlete(a) {
   let res = utils.formatText(a.athlete_firstname + ' ' + a.athlete_lastname, 'bold');
-  let km = Math.floor(a.distance / 100) / 10;
+  let km = metretokilometre(a.distance);
   res += ' ' + km + 'km (↑' + Math.round(a.elev_gain) + 'm) in ';
   res += formatTime(a.moving_time) + ' (' + formatTime(a.moving_time / (a.distance / 1000)) + '/km)';
   return res;
@@ -107,9 +107,33 @@ function getSegmentLeaders(id) {
 }
 exports.xx = getSegmentLeaders;
 
+function getActivity(id, success) {
+  let url = 'https://www.strava.com/api/v3/activities/' + id + '?access_token=' + stravaconfig.access_token;
+  request(url, function(err, response, body) {
+    if (err === null && response.statusCode === 200) {
+      let activity = JSON.parse(body);
+      let result = '"' + activity.name + '", ' + activity.type;
+      if (activity.athlete.firstname !== undefined) {
+        result += ' by ' + activity.athlete.firstname + ' ' + activity.athlete.lastname + '. ';
+      } else {
+        result += '. ';
+      }
+      result += metretokilometre(activity.distance) + ' km ';
+      result += '(↑' + Math.round(activity.total_elevation_gain) + 'm) in ';
+      result += formatTime(activity.moving_time) + ' (' + formatTime(activity.moving_time / (activity.distance / 1000)) + '/km)';
+      success(result);
+    }
+  });
+}
+
+function metretokilometre(metre) {
+  return Math.floor(metre / 100) / 10;
+}
+
 const clubRegex = /https?:\/\/www\.strava\.com\/clubs\/(\w+)/;
 const segmentRegex = /https?:\/\/www\.strava\.com\/segments\/(\d+)/;
 //const athleteRegex = /https?:\/\/www\.strava\.com\/athletes\/(\d+)/;
+const activityRegex = /https?:\/\/www\.strava\.com\/activities\/(\d+)/;
 
 /**
  * Adds listener to client to:
@@ -145,11 +169,17 @@ exports.activateOn = function(client) {
         client.say(to, '[STRAVA SEGMENT] ' + result);
       });
     }
+    let activityid = text.match(activityRegex);
+    if (activityid !== null) {
+      getActivity(activityid[1], function(result) {
+        client.say(to, '[STRAVA ACTIVITY] ' + result);
+      });
+    }
   });
 };
 exports.info = {
   id: 'strava',
-  version: '0.0.1',
+  version: '0.0.2',
   description: 'Gets information about a strava link',
   commands: []
 };
