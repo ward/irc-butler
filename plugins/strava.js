@@ -156,7 +156,7 @@ exports.activateOn = function(client) {
         getClubLeaderboard(clubid, success);
       };
     };
-    if (text.match(/^!strava/)) {
+    if (text.match(/^!strava/i)) {
       getClub('freenode_running', sayClub('freenode_running', true));
     }
     let clubid = text.match(clubRegex);
