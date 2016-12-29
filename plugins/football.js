@@ -5,7 +5,7 @@
 'use strict';
 
 const LS = require('./football-livescore.js');
-const utils = require('../utils.js');
+const ircColors = require('irc-colors');
 
 function doCountries(client, target) {
   function callback(countries) {
@@ -119,9 +119,9 @@ function doAllFromCountry(country, client, target) {
 function gamesToString(games) {
   var result = '';
   for (let country of Object.keys(games)) {
-    result += utils.formatText('<' + country.toUpperCase() + '>', 'reverse') + ' ';
+    result += ircColors.italic('<' + country.toUpperCase() + '>') + ' ';
     for (let competition of Object.keys(games[country])) {
-      result += utils.formatText('[' + competition + ']', 'bold') + ' ';
+      result += ircColors.bold('[' + competition + ']') + ' ';
       let _games = games[country][competition].join(' ');
       result += _games + ' ';
     }

@@ -4,10 +4,9 @@
  */
 'use strict';
 
-let config = require('config');
-let request = require('request');
-
-let utils = require('../utils.js');
+const config = require('config');
+const request = require('request');
+const ircColors = require('irc-colors');
 
 let stravaconfig = config.get('bot.strava');
 for (let key in stravaconfig) {
@@ -57,7 +56,7 @@ function getClubLeaderboard(id, success) {
   });
 }
 function formatClubLeaderboardAthlete(a) {
-  let res = utils.formatText(a.athlete_firstname + ' ' + a.athlete_lastname, 'bold');
+  let res = ircColors.bold(a.athlete_firstname + ' ' + a.athlete_lastname);
   let km = metretokilometre(a.distance);
   res += ' ' + km + 'km (↑' + Math.round(a.elev_gain) + 'm) in ';
   res += formatTime(a.moving_time) + ' (' + formatTime(a.moving_time / (a.distance / 1000)) + '/km)';
