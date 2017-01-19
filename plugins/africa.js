@@ -83,7 +83,7 @@ function parseResultRow(row) {
   let cleanscore = $(cells[3]).text().trim().replace(/ |\n/g, '');
   if (cleanscore.indexOf(':') > -1) {
     let hour = parseInt(cleanscore.substring(0,2));
-    hour = hour - 2;
+    hour = hour - 1;
     cleanscore = hour + cleanscore.substring(2);
   }
   let res = {
