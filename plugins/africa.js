@@ -8,7 +8,7 @@ var $ = require('cheerio');
 var http = require('http');
 
 const groupMatcher = /^!(?:africa|afcon) ([A-D])$/i;
-const finalsMatcher = /^!(?:africa|afcon) (QF|SF|F)(?:inals?)?$/i;
+const finalsMatcher = /^!(?:africa|afcon) (3(?:rd)?|QF|SF|F)(?:inals?)?$/i;
 
 function getGroupInfo(client, to, group) {
   let url = groupToUrl(group);
@@ -143,10 +143,13 @@ function getFinalStage(client, to, stage) {
     let relevantGames = null;
     switch (stage.toLowerCase()) {
       case 'qf':
-        relevantGames = allGames.slice(3, 7);
+        relevantGames = allGames.slice(4, 8);
         break;
       case 'sf':
-        relevantGames = allGames.slice(1, 3);
+        relevantGames = allGames.slice(2, 4);
+        break;
+      case '3':
+        relevantGames = allGames.slice(1, 2);
         break;
       case 'f':
         relevantGames = allGames.slice(0, 1);
@@ -225,8 +228,8 @@ exports.info = {
       description: 'Show standings for GROUP (A-D)'
     },
     {
-      trigger: '!africa (QF|SF|F)inal',
-      description: 'Show the games in the round of 16, quarterfinals, semifinals, or finals.'
+      trigger: '!africa (3|QF|SF|F)inal',
+      description: 'Show the games in the quarterfinals, semifinals, 3rd place game, or finals.'
     }
   ]
 };
