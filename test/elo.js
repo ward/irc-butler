@@ -8,3 +8,4 @@ elo.activateOn(fakeClient);
 fakeClient.triggerMessage('','','!elo Anderlecht');
 fakeClient.triggerMessage('','','!elo paris');
 fakeClient.triggerMessage('','','!elo e');
+fakeClient.triggerMessage('','','!elo 15');

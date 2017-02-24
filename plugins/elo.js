@@ -89,8 +89,17 @@ function rankToString(team) {
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
+    let elorankmatch = text.match(/^!elo (\d+)$/i);
     let elomatch = text.match(/^!elo (.+)$/i);
-    if (elomatch !== null) {
+    if (elorankmatch !== null) {
+      updateEloIfNeeded(function() {
+        let number = parseInt(elorankmatch[1]) - 1;
+        if (number < 0 || number > eloranks.length) {
+          return;
+        }
+        client.say(to, '[ELO] ' + rankToString(eloranks[number]));
+      });
+    } else if (elomatch !== null) {
       updateEloIfNeeded(function() {
         let rank = findTeam(elomatch[1]);
         let ranks = findTeamsFuzzy(elomatch[1]);
