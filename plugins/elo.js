@@ -97,7 +97,7 @@ exports.activateOn = function(client) {
         if (rank !== undefined) {
           client.say(to, '[ELO] ' + rankToString(rank));
         } else if (ranks.length !== 0) {
-          ranks = ranks.map(res => res.original);
+          ranks = ranks.map(res => res.original).slice(0, 10);
           client.say(to, '[ELO] (No exact match found) ' + ranks.map(rankToString).join(', '));
         } else {
           client.say(to, '[ELO] No results found.');
