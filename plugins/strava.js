@@ -48,19 +48,30 @@ function getClubLeaderboard(id, success) {
       if (leaderboard.length !== 0) {
         success(
           leaderboard
-            .slice(0,5)
-            .map((v, idx) => '['+(idx+1)+'] ' + formatClubLeaderboardAthlete(v))
+            .slice(0,10)
+            .map((v, idx) => ''+(idx+1)+'. ' + formatClubLeaderboardAthlete(v))
             .join(' '));
       }
     }
   });
 }
 function formatClubLeaderboardAthlete(a) {
-  let res = ircColors.bold(a.athlete_firstname + ' ' + a.athlete_lastname);
-  let km = metretokilometre(a.distance);
-  res += ' ' + km + 'km (↑' + Math.round(a.elev_gain) + 'm) in ';
-  res += formatTime(a.moving_time) + ' (' + formatTime(a.moving_time / (a.distance / 1000)) + '/km)';
+  let res = ircColors.bold(a.athlete_firstname);
+  let km = Math.round(metretokilometre(a.distance));
+  res += ' ' + km + 'k in ';
+  res += formatTotalTime(a.moving_time);
+  res += ' (' + formatTime(a.moving_time / (a.distance / 1000)) + '/k ↑' + Math.round(a.elev_gain) + 'm)';
   return res;
+}
+function formatTotalTime(secs) {
+  let s = Math.floor(secs);
+  let hours = Math.floor(s / 3600);
+  let minutes = Math.floor((s % 3600) / 60);
+  let seconds = s % 60;
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+  return hours + 'h' + minutes;
 }
 function formatTime(secs) {
   let s = Math.floor(secs);
