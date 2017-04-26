@@ -96,7 +96,7 @@ exports.activateOn = function(client) {
 };
 exports.info = {
   id: 'calc',
-  version: '0.0.1',
+  version: '0.0.3',
   description: 'Calculator to handle your mathematical problems.',
   commands: [
     {
@@ -105,15 +105,15 @@ exports.info = {
                     'Notifies you if this fails.'
     },
     {
-      trigger: '!kg, !lbs, !km, !mi, !c, !f',
+      trigger: '!kg/!lbs/!km/!mi/!c/!f NUMBER',
       description: 'Conversions between weight, distance, or temperature.'
     },
     {
-      trigger: '!cm N\'N"',
+      trigger: '!cm NUMBER\'NUMBER"',
       description: 'Convert feet and inch to centimetres.'
     },
     {
-      trigger: '!feet, !inch',
+      trigger: '!feet/!inch NUMBER',
       description: 'Convert centimetres to feet and inch.'
     }
   ]
