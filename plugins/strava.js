@@ -28,7 +28,7 @@ function getClub(id, success) {
   });
 }
 
-function getClubLeaderboard(id, success) {
+function getClubLeaderboard(id, success, sorting) {
   let url = 'https://www.strava.com/clubs/' + id + '/leaderboard';
   let options = {
     url: url,
@@ -46,6 +46,7 @@ function getClubLeaderboard(id, success) {
         return;
       }
       if (leaderboard.length !== 0) {
+        sortBy(sorting, leaderboard);
         success(
           leaderboard
             .slice(0,10)
@@ -54,6 +55,47 @@ function getClubLeaderboard(id, success) {
       }
     }
   });
+}
+/**
+{ athlete_id: 20043925,
+    athlete_firstname: 'Michael',
+    athlete_lastname: 'A.',
+    athlete_picture_url: '/assets/avatar/athlete/medium.png',
+    distance: 35716.4,
+    num_activities: 3,
+    best_activities_distance: 14550.6,
+    best_activities_distance_activity_id: 979345230,
+    best_activities_elev_gain: 57.15,
+    best_activities_elev_gain_activity_id: 979345230,
+    best_activities_moving_time: 4291,
+    best_activities_moving_time_activity_id: 979345230,
+    elapsed_time: 11218,
+    moving_time: 10494,
+    elev_gain: 130.8595,
+    swim_time: 0,
+    run_time: 10494,
+    ride_time: 0,
+    rank: 1,
+    velocity: 3.403506765770917 }
+*/
+function sortBy(type, leaderboard) {
+  switch (type) {
+    case 'elev':
+      leaderboard.sort(function(a,b) {return (a.elev_gain < b.elev_gain) ? 1 : ((b.elev_gain < a.elev_gain) ? -1 : 0);} );
+      break;
+    case 'distance':
+      leaderboard.sort(function(a,b) {return (a.distance < b.distance) ? 1 : ((b.distance < a.distance) ? -1 : 0);} );
+      break;
+    case 'moving':
+      leaderboard.sort(function(a,b) {return (a.moving_time < b.moving_time) ? 1 : ((b.moving_time < a.moving_time) ? -1 : 0);} );
+      break;
+    case 'elapsed':
+      leaderboard.sort(function(a,b) {return (a.elapsed_time < b.elapsed_time) ? 1 : ((b.elapsed_time < a.elapsed_time) ? -1 : 0);} );
+      break;
+    case 'velo':
+      leaderboard.sort(function(a,b) {return (a.velocity < b.velocity) ? 1 : ((b.velocity < a.velocity) ? -1 : 0);} );
+      break;
+  }
 }
 function formatClubLeaderboardAthlete(a) {
   let res = ircColors.bold(a.athlete_firstname);
@@ -67,7 +109,7 @@ function formatTotalTime(secs) {
   let s = Math.floor(secs);
   let hours = Math.floor(s / 3600);
   let minutes = Math.floor((s % 3600) / 60);
-  let seconds = s % 60;
+  //let seconds = s % 60;
   if (minutes < 10) {
     minutes = '0' + minutes;
   }
@@ -153,7 +195,7 @@ const activityRegex = /https?:\/\/www\.strava\.com\/activities\/(\d+)/;
  */
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
-    let sayClub = function(clubid, withlink=false) {
+    let sayClub = function(clubid, withlink=false, sorting='rank') {
       return function(result) {
         let text = '[STRAVA]' + ' ' + result;
         if (withlink) {
@@ -163,11 +205,15 @@ exports.activateOn = function(client) {
         let success = function(result) {
           client.say(to, '[STRAVA]' + ' ' + result);
         };
-        getClubLeaderboard(clubid, success);
+        getClubLeaderboard(clubid, success, sorting);
       };
     };
     if (text.match(/^!strava/i)) {
-      getClub('freenode_running', sayClub('freenode_running', true));
+      let sorting = text.match(/^!strava (\w+)/i);
+      if(sorting) {
+        sorting = sorting[1];
+      }
+      getClub('freenode_running', sayClub('freenode_running', true, sorting));
     }
     let clubid = text.match(clubRegex);
     if (clubid !== null) {
