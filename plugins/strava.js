@@ -70,7 +70,7 @@ function sortBy(type, leaderboard) {
     case 'elapsed':
       leaderboard.sort(function(a,b) {return (a.elapsed_time < b.elapsed_time) ? 1 : ((b.elapsed_time < a.elapsed_time) ? -1 : 0);} );
       break;
-    case 'velo':
+    case 'pace':
       leaderboard.sort(function(a,b) {return (a.velocity < b.velocity) ? 1 : ((b.velocity < a.velocity) ? -1 : 0);} );
       break;
   }
