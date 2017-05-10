@@ -56,28 +56,6 @@ function getClubLeaderboard(id, success, sorting) {
     }
   });
 }
-/**
-{ athlete_id: 20043925,
-    athlete_firstname: 'Michael',
-    athlete_lastname: 'A.',
-    athlete_picture_url: '/assets/avatar/athlete/medium.png',
-    distance: 35716.4,
-    num_activities: 3,
-    best_activities_distance: 14550.6,
-    best_activities_distance_activity_id: 979345230,
-    best_activities_elev_gain: 57.15,
-    best_activities_elev_gain_activity_id: 979345230,
-    best_activities_moving_time: 4291,
-    best_activities_moving_time_activity_id: 979345230,
-    elapsed_time: 11218,
-    moving_time: 10494,
-    elev_gain: 130.8595,
-    swim_time: 0,
-    run_time: 10494,
-    ride_time: 0,
-    rank: 1,
-    velocity: 3.403506765770917 }
-*/
 function sortBy(type, leaderboard) {
   switch (type) {
     case 'elev':
