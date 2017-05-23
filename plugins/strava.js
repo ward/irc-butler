@@ -28,7 +28,7 @@ function getClub(id, success) {
   });
 }
 
-function getClubLeaderboard(id, success) {
+function getClubLeaderboard(id, success, sorting) {
   let url = 'https://www.strava.com/clubs/' + id + '/leaderboard';
   let options = {
     url: url,
@@ -46,6 +46,7 @@ function getClubLeaderboard(id, success) {
         return;
       }
       if (leaderboard.length !== 0) {
+        sortBy(sorting, leaderboard);
         success(
           leaderboard
             .slice(0,10)
@@ -54,6 +55,25 @@ function getClubLeaderboard(id, success) {
       }
     }
   });
+}
+function sortBy(type, leaderboard) {
+  switch (type) {
+    case 'elev':
+      leaderboard.sort(function(a,b) {return (a.elev_gain < b.elev_gain) ? 1 : ((b.elev_gain < a.elev_gain) ? -1 : 0);} );
+      break;
+    case 'distance':
+      leaderboard.sort(function(a,b) {return (a.distance < b.distance) ? 1 : ((b.distance < a.distance) ? -1 : 0);} );
+      break;
+    case 'moving':
+      leaderboard.sort(function(a,b) {return (a.moving_time < b.moving_time) ? 1 : ((b.moving_time < a.moving_time) ? -1 : 0);} );
+      break;
+    case 'elapsed':
+      leaderboard.sort(function(a,b) {return (a.elapsed_time < b.elapsed_time) ? 1 : ((b.elapsed_time < a.elapsed_time) ? -1 : 0);} );
+      break;
+    case 'pace':
+      leaderboard.sort(function(a,b) {return (a.velocity < b.velocity) ? 1 : ((b.velocity < a.velocity) ? -1 : 0);} );
+      break;
+  }
 }
 function formatClubLeaderboardAthlete(a) {
   let res = ircColors.bold(a.athlete_firstname);
@@ -67,7 +87,7 @@ function formatTotalTime(secs) {
   let s = Math.floor(secs);
   let hours = Math.floor(s / 3600);
   let minutes = Math.floor((s % 3600) / 60);
-  let seconds = s % 60;
+  //let seconds = s % 60;
   if (minutes < 10) {
     minutes = '0' + minutes;
   }
@@ -153,7 +173,7 @@ const activityRegex = /https?:\/\/www\.strava\.com\/activities\/(\d+)/;
  */
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
-    let sayClub = function(clubid, withlink=false) {
+    let sayClub = function(clubid, withlink=false, sorting='rank') {
       return function(result) {
         let text = '[STRAVA]' + ' ' + result;
         if (withlink) {
@@ -163,11 +183,15 @@ exports.activateOn = function(client) {
         let success = function(result) {
           client.say(to, '[STRAVA]' + ' ' + result);
         };
-        getClubLeaderboard(clubid, success);
+        getClubLeaderboard(clubid, success, sorting);
       };
     };
     if (text.match(/^!strava/i)) {
-      getClub('freenode_running', sayClub('freenode_running', true));
+      let sorting = text.match(/^!strava (\w+)/i);
+      if(sorting) {
+        sorting = sorting[1];
+      }
+      getClub('freenode_running', sayClub('freenode_running', true, sorting));
     }
     let clubid = text.match(clubRegex);
     if (clubid !== null) {
