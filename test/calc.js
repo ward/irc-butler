@@ -24,3 +24,7 @@ fakeClient.triggerMessage('', '', '!cm 5\'1');
 fakeClient.triggerMessage('', '', '!cm 5\' 1.25');
 
 fakeClient.triggerMessage('', '', '!ft 155');
+
+fakeClient.triggerMessage('', '', '!pace 5:00');
+fakeClient.triggerMessage('', '', '!pace 5m00');
+fakeClient.triggerMessage('', '', '!pace 5m00s');

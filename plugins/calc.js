@@ -35,9 +35,17 @@ const shortcuts = [
   }
 ];
 
-// These two require some special work
+// These require some special work
 const shortcutCM = /^!cm +(\d+)' *([0-9.]+)"?$/i;
 const shortcutFeetInch = /^!(?:f(?:ee|oo)?t|in(?:ch|ches)?) +([0-9.]+) *(?:cm)?$/i;
+const shortcutPace = /^!pace +(.+)$/i;
+
+function seconds_to_string(seconds) {
+  let m = Math.floor(seconds / 60);
+  let s = seconds % 60;
+  s = s < 10 ? "0" + s : s;
+  return m + ":" + s;
+}
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
@@ -91,12 +99,32 @@ exports.activateOn = function(client) {
       } catch(e) {
         console.error(e);
       }
+      return;
+    }
+
+    m = text.match(shortcutPace);
+    if (m !== null) {
+      // Analyse what exactly the input is and calc based on that
+      m = m[1].match(/^([0-9]+)(?:[m:]([0-9]?[0-9])s?)?$/i);
+      if (m !== null) {
+        let minutes = parseInt(m[1]);
+        let seconds = 0;
+        if (m[2] !== undefined) {
+          seconds = parseInt(m[2]);
+        }
+        let basepace = seconds + minutes * 60;
+        let pacepermile = Math.round(basepace * 1.6093);
+        let paceperkm = Math.round(basepace / 1.6093);
+        let miletokmtext = seconds_to_string(basepace) + "/mile = " + seconds_to_string(paceperkm) + "/km";
+        let kmtomiletext = seconds_to_string(basepace) + "/km = " + seconds_to_string(pacepermile) + "/mile";
+        client.say(to, miletokmtext + " || " + kmtomiletext);
+      }
     }
   });
 };
 exports.info = {
   id: 'calc',
-  version: '0.0.3',
+  version: '0.0.4',
   description: 'Calculator to handle your mathematical problems.',
   commands: [
     {
@@ -115,6 +143,10 @@ exports.info = {
     {
       trigger: '!feet/!inch NUMBER',
       description: 'Convert centimetres to feet and inch.'
-    }
+    },
+    {
+      trigger: '!pace NUMBER:NUMBER',
+      description: 'Convert pace per km to pace per mile (and vice versa)'
+    },
   ]
 };
