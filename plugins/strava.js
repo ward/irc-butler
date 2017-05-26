@@ -59,18 +59,28 @@ function getClubLeaderboard(id, success, sorting) {
 function sortBy(type, leaderboard) {
   switch (type) {
     case 'elev':
+    case 'elevation':
+    case 'vertical':
+    case 'climb':
+    case 'climbing':
       leaderboard.sort(function(a,b) {return (a.elev_gain < b.elev_gain) ? 1 : ((b.elev_gain < a.elev_gain) ? -1 : 0);} );
       break;
     case 'distance':
+    case 'dist':
+    case 'length':
+    case 'len':
       leaderboard.sort(function(a,b) {return (a.distance < b.distance) ? 1 : ((b.distance < a.distance) ? -1 : 0);} );
       break;
     case 'moving':
+    case 'time':
+    case 'duration':
       leaderboard.sort(function(a,b) {return (a.moving_time < b.moving_time) ? 1 : ((b.moving_time < a.moving_time) ? -1 : 0);} );
       break;
     case 'elapsed':
       leaderboard.sort(function(a,b) {return (a.elapsed_time < b.elapsed_time) ? 1 : ((b.elapsed_time < a.elapsed_time) ? -1 : 0);} );
       break;
     case 'pace':
+    case 'speed':
       leaderboard.sort(function(a,b) {return (a.velocity < b.velocity) ? 1 : ((b.velocity < a.velocity) ? -1 : 0);} );
       break;
   }
@@ -213,7 +223,12 @@ exports.activateOn = function(client) {
 };
 exports.info = {
   id: 'strava',
-  version: '0.0.2',
+  version: '0.0.3',
   description: 'Gets information about a strava link',
-  commands: []
+  commands: [
+    {
+      trigger: '!strava [elevation|duration|pace|distance]',
+      description: 'Shows the leaderboard for the default Strava club, sorted by the option. Default is distance.'
+    },
+  ]
 };
