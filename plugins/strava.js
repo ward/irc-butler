@@ -8,12 +8,7 @@ const config = require('config');
 const request = require('request');
 const ircColors = require('irc-colors');
 
-let stravaconfig = config.get('bot.strava');
-for (let key in stravaconfig) {
-  if (stravaconfig[key] === null || stravaconfig[key] === undefined) {
-    throw new Error('Tried to load strava plugin, but credentials are not present: ' + JSON.stringify(stravaconfig));
-  }
-}
+const stravaconfig = config.get('bot.strava');
 
 function getClub(id, success) {
   let url = 'https://www.strava.com/api/v3/clubs/' + id + '?access_token=' + stravaconfig.access_token;
@@ -182,6 +177,12 @@ const activityRegex = /https?:\/\/www\.strava\.com\/activities\/(\d+)/;
  * - Show strava club info when a club's url is linked in chat
  */
 exports.activateOn = function(client) {
+  for (let key in stravaconfig) {
+    if (stravaconfig[key] === null || stravaconfig[key] === undefined) {
+      throw new Error('Tried to load strava plugin, but credentials are not present: ' + JSON.stringify(stravaconfig));
+    }
+  }
+
   client.addListener('message#', function(from, to, text) {
     let sayClub = function(clubid, withlink=false, sorting='rank') {
       return function(result) {

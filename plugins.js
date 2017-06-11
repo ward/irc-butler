@@ -13,15 +13,29 @@
  */
 'use strict';
 
+const util = require('util');
+
 function addPlugin(plugin) {
-  let client = this.client;
-  if (typeof(plugin.info) === 'undefined') {
-    let errorMsg = 'Plugin does not provide information about itself,' +
-                    'missing .info property.' + plugin;
-    throw new TypeError(errorMsg);
+  try {
+    let client = this.client;
+    if (!pluginHasInfo(plugin)) {
+      let errorMsg = 'Plugin does not provide valid info. ' +
+                     'Requires .info attribute with id, ' +
+                     'version, and description.';
+      throw new TypeError(errorMsg);
+    }
+    plugin.activateOn(client);
+    this.plugins.push(plugin.info);
+  } catch (e) {
+    util.log("Failed to load plugin " + plugin + ": " + e);
   }
-  this.plugins.push(plugin.info);
-  plugin.activateOn(client);
+}
+
+function pluginHasInfo(plugin) {
+  return typeof(plugin.info) === 'object' &&
+         typeof(plugin.info.id) === 'string' &&
+         typeof(plugin.info.version) === 'string' &&
+         typeof(plugin.info.description) === 'string';
 }
 
 /**

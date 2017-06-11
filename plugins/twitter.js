@@ -5,13 +5,7 @@ let config = require('config');
 let Twitter = require('twitter-node-client').Twitter;
 
 let twitterconfig = config.get('bot.twitter');
-for (let key in twitterconfig) {
-  if (twitterconfig[key] === null || twitterconfig[key] === undefined) {
-    throw new Error('Tried to load twitter plugin, but credentials are not present: ' + JSON.stringify(twitterconfig));
-  }
-}
-
-let twitter = new Twitter(twitterconfig);
+let twitter = null;
 
 // Now just use
 // twitter.getTweet({ id: '1111111111'}, error, success);
@@ -28,6 +22,13 @@ function matchTweet(text) {
 }
 
 exports.activateOn = function(client) {
+  for (let key in twitterconfig) {
+    if (twitterconfig[key] === null || twitterconfig[key] === undefined) {
+      throw new Error('Tried to load twitter plugin, but credentials are not present: ' + JSON.stringify(twitterconfig));
+    }
+  }
+  twitter = new Twitter(twitterconfig);
+
   client.addListener('message#', function(from, to, text) {
     let tweetid = matchTweet(text);
     if (tweetid === null) {
