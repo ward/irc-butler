@@ -78,8 +78,16 @@ function fetchLivescore(success, failure) {
 
 function parseLivescoreJSON(data) {
   games = {};
-  let decrypted = CryptUtil.decrypt(data);
-  let obj = JSON.parse(decrypted);
+  let decrypted;
+  let obj;
+  try {
+    decrypted = CryptUtil.decrypt(data);
+    obj = JSON.parse(decrypted);
+  } catch (e) {
+    console.error('Failed to decrypt or parse livescore data');
+    console.error(e);
+    return;
+  }
   for (let i = 0; i < obj['Stages'].length; i++) {
     if (obj['Stages'][i]['Events'] === undefined) {
       continue;
