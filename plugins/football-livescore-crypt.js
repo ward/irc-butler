@@ -8,7 +8,7 @@ var CryptUtil = function() {
       case 3:
         return a == d.ch0 && b == d.ch1 && c == d.ch2;
       default:
-        return !1
+        return !1;
     }
   }
 
@@ -61,25 +61,25 @@ var CryptUtil = function() {
       ch1: 35,
       ch2: 36
     }, o = 40, p = 126, m = c(b.substr(16, 19)), n = 35), g = b.length - n, h = g; h > 0; h--) v = n + h - 1, r = b.charCodeAt(v), u = (g - h + 1) % 10, r >= o && p >= r ? q += o > r - m - u ? String.fromCharCode(r - m - u + (p - o + 1)) : String.fromCharCode(r - m - u) : (s = null, t = null, v >= 1 && (s = b.charCodeAt(v - 1)), v >= 2 && (t = b.charCodeAt(v - 2)), a(t, s, r, d) ? (q += String.fromCharCode(10), h -= d.length - 1) : a(t, s, r, e) ? (q += String.fromCharCode(13), h -= e.length - 1) : a(t, s, r, f) ? (q += String.fromCharCode(32), h -= f.length - 1) : q += b.charAt(v));
-    return q
+    return q;
   }
 
   function c(a) {
     var b, c, e, f;
     try {
-      return b = d(a.charCodeAt(17)), c = d(a.charCodeAt(18)), e = d(a.charCodeAt(11)), f = d(a.charCodeAt(0)) + d(a.charCodeAt(1)) + d(a.charCodeAt(2)) + d(a.charCodeAt(3)) + d(a.charCodeAt(5)) + d(a.charCodeAt(6)) + d(a.charCodeAt(8)) + d(a.charCodeAt(9)) + e + d(a.charCodeAt(12)) + d(a.charCodeAt(14)) + d(a.charCodeAt(15)) + b + c, c >= b ? f = f + c - b : f += 3 * (e + 1), f
+      return b = d(a.charCodeAt(17)), c = d(a.charCodeAt(18)), e = d(a.charCodeAt(11)), f = d(a.charCodeAt(0)) + d(a.charCodeAt(1)) + d(a.charCodeAt(2)) + d(a.charCodeAt(3)) + d(a.charCodeAt(5)) + d(a.charCodeAt(6)) + d(a.charCodeAt(8)) + d(a.charCodeAt(9)) + e + d(a.charCodeAt(12)) + d(a.charCodeAt(14)) + d(a.charCodeAt(15)) + b + c, c >= b ? f = f + c - b : f += 3 * (e + 1), f;
     } catch (g) {
-      return 27
+      return 27;
     }
   }
 
   function d(a) {
     if (a >= 48 && 57 >= a) return a - 48;
-    throw "char value is not a number character"
+    throw "char value is not a number character";
   }
   return {
     decrypt: b
-  }
+  };
 }();
 
 exports.CryptUtil = CryptUtil;

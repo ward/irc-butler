@@ -6,8 +6,6 @@
 'use strict';
 
 var util = require('util');
-//var $ = require('cheerio');
-var http = require('http');
 var livescorecrypt = require('./football-livescore-crypt.js');
 var request = require('request');
 
@@ -81,7 +79,7 @@ function parseLivescoreJSON(data) {
     decrypted = livescorecrypt.CryptUtil.decrypt(data);
     obj = JSON.parse(decrypted);
   } catch (e) {
-    console.error('Failed to decrypt or parse livescore data');
+    console.error('Failed to decrypt or JSON parse livescore data');
     console.error(e);
     return;
   }
