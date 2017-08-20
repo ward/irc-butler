@@ -37,7 +37,11 @@ function fetchLeagueClassicStandings(id, κ, κfail) {
         data += chunk;
       });
       response.on('end', function() {
-        κ(JSON.parse(data));
+        try {
+          κ(JSON.parse(data));
+        } catch (e) {
+          κfail('Something went wrong... ' + e);
+        }
       });
     }
   }).on('error', function() {
