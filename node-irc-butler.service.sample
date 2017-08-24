@@ -1,0 +1,24 @@
+# Place this node-irc-butler.service file in /etc/systemd/system
+# Enable with systemctl enable node-irc-butler.service
+# Logs with journalctl -u node-irc-butler
+# Status with systemctl status node-irc-butler.service
+[Unit]
+Description=Node IRC Butler - IRC Bot on Freenode
+Documentation=https://github.com/ward/irc-butler
+After=network.target
+
+[Service]
+Environment=NODE_ENV=production
+ExecStart=[nodebinary] main.js
+Restart=always
+RestartSec=5
+Type=simple
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=node-irc-butler
+User=node-irc-butler
+Group=node-irc-butler
+WorkingDirectory=/path/to/repo
+
+[Install]
+WantedBy=multi-user.target
