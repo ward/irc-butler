@@ -1,7 +1,14 @@
+'use strict';
 const soccerway = require('../plugins/soccerway.js');
 
-soccerway.syncIfNeeded('B', function() {
-  console.log(soccerway.getGroup('B'));
+let urls = {
+  'A': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-a/g11480/',
+  'B': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-b/g11481/'
+}
+let cl = new soccerway.Soccerway(urls);
+
+cl.syncIfNeeded('B', function() {
+  console.log(cl.getGroup('B'));
 });
 
-console.log(soccerway.getGroup('A'));
+console.log(cl.getGroup('A'));
