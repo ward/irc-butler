@@ -18,7 +18,8 @@
       "retake-name",
       "twitter",
       "strava",
-      "elo"
+      "elo",
+      "soccerway-plug"
     ],
     "twitter": {
       "consumerKey": null,

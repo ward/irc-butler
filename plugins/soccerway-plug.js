@@ -30,7 +30,7 @@ const cl = new Soccerway({
   'stages': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/s14294/final-stages/'
 });
 
-const clGroupMatcher = /^!stand(?:ings?)? u?cl ([A-H])$/i;
+const clGroupMatcher = /^!(?:rank|stand)(?:ings?)? u?cl ([A-H])$/i;
 
 const el = new Soccerway({
   'A': 'http://int.soccerway.com/international/europe/uefa-cup/20172018/group-stage/group-a/g11411/',
@@ -48,7 +48,7 @@ const el = new Soccerway({
   'stages': 'http://int.soccerway.com/international/europe/uefa-cup/20172018/s14115/final-stages/'
 });
 
-const elGroupMatcher = /^!stand(?:ings?)? el ([A-L])$/i;
+const elGroupMatcher = /^!(?:rank|stand)(?:ings?)? el ([A-L])$/i;
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
