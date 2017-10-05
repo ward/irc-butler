@@ -2,6 +2,14 @@
  * CL, EL
  */
 
+// TODO: Expand to regular leagues
+// 14:19 <Vaanir> Top 6 teams maybe ward
+// 14:22 <ward> was thinking along those lines, just wondering about situation where you *do* care about the lower spots
+// 14:23 <ward> maybe also something along the lines of !rank epl TEAMNAME that shows the spots surrounding that team
+// 14:23 <ward> or the actual rank number I guess in addition to teamname
+// 14:24 <ward> and default to top 6, that sounds okish
+// 14:24 <ward> will have to see how it looks later
+
 const Soccerway = require('./soccerway.js').Soccerway;
 
 function oneTeamToString(team) {
@@ -50,11 +58,26 @@ const el = new Soccerway({
 
 const elGroupMatcher = /^!(?:rank|stand)(?:ings?)? el ([A-L])$/i;
 
+const uefa = new Soccerway({
+  'A': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-a/g8854/',
+  'B': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-b/g8855/',
+  'C': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-c/g8856/',
+  'D': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-d/g8857/',
+  'E': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-e/g8858/',
+  'F': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-f/g8859/',
+  'G': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-g/g8860/',
+  'H': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-h/g8861/',
+  'I': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-i/g8862/',
+});
+
+const uefaGroupMatcher = /^!(?:rank|stand)(?:ings?)? uefa ([A-I])$/i;
+
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
     let clGroupMatch = trimmedText.match(clGroupMatcher);
     let elGroupMatch = trimmedText.match(elGroupMatcher);
+    let uefaGroupMatch = trimmedText.match(uefaGroupMatcher);
     if (clGroupMatch !== null) {
       let group = clGroupMatch[1].toUpperCase();
       cl.syncIfNeeded(group, function() {
@@ -66,6 +89,13 @@ exports.activateOn = function(client) {
       let group = elGroupMatch[1].toUpperCase();
       el.syncIfNeeded(group, function() {
         let res = el.getGroup(group);
+        res = res.ranks.map(oneTeamToString).join('; ');
+        client.say(to, '[GROUP ' + group + '] ' + res);
+      });
+    } else if (uefaGroupMatch !== null) {
+      let group = uefaGroupMatch[1].toUpperCase();
+      uefa.syncIfNeeded(group, function() {
+        let res = uefa.getGroup(group);
         res = res.ranks.map(oneTeamToString).join('; ');
         client.say(to, '[GROUP ' + group + '] ' + res);
       });
