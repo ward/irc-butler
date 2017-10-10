@@ -72,12 +72,19 @@ const uefa = new Soccerway({
 
 const uefaGroupMatcher = /^!(?:rank|stand)(?:ings?)? uefa ([A-I])$/i;
 
+const conmebol = new Soccerway({
+  'main': 'http://int.soccerway.com/international/south-america/wc-qualifying-south-america/2018-russia/1st-round/r31495/'
+});
+
+const conmebolGroupMatcher = /^!(?:rank|stand)(?:ings?)? conmebol$/i;
+
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
     let clGroupMatch = trimmedText.match(clGroupMatcher);
     let elGroupMatch = trimmedText.match(elGroupMatcher);
     let uefaGroupMatch = trimmedText.match(uefaGroupMatcher);
+    let conmebolGroupMatch = trimmedText.match(conmebolGroupMatcher);
     if (clGroupMatch !== null) {
       let group = clGroupMatch[1].toUpperCase();
       cl.syncIfNeeded(group, function() {
@@ -98,6 +105,12 @@ exports.activateOn = function(client) {
         let res = uefa.getGroup(group);
         res = res.ranks.map(oneTeamToString).join('; ');
         client.say(to, '[GROUP ' + group + '] ' + res);
+      });
+    } else if (conmebolGroupMatch !== null) {
+      conmebol.syncIfNeeded('main', function() {
+        let res = conmebol.getGroup('main');
+        res = res.ranks.map(oneTeamToString).join('; ');
+        client.say(to, '[CONMEBOL] ' + res);
       });
     }
   });

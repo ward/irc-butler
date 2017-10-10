@@ -6,3 +6,4 @@ p.activateOn(fakeClient);
 
 fakeClient.triggerMessage('', '', '!stand cl d');
 fakeClient.triggerMessage('', '', '!stand el k');
+fakeClient.triggerMessage('', '', '!rank conmebol');
