@@ -79,6 +79,34 @@ const leagues = [
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger|bund(?:es)?)(?: +(.+))?$/i,
     'name': 'DEU',
   },
+  {
+    'soccerway': new Soccerway({
+      '1': 'http://int.soccerway.com/national/netherlands/eredivisie/20172018/regular-season/r42274/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:nld|ned|netherlands|ere(?:divisie)?)(?: +(.+))?$/i,
+    'name': 'NLD',
+  },
+  {
+    'soccerway': new Soccerway({
+      '1': 'http://int.soccerway.com/national/italy/serie-a/20172018/regular-season/r42011/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:ita(?:ly)?|serie ?a?)(?: +(.+))?$/i,
+    'name': 'ITA',
+  },
+  {
+    'soccerway': new Soccerway({
+      '1': 'http://int.soccerway.com/national/france/ligue-1/20172018/regular-season/r41646/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:fra(?:nce)?|ligue ?1?)(?: +(.+))?$/i,
+    'name': 'FRA',
+  },
+  {
+    'soccerway': new Soccerway({
+      '1': 'http://int.soccerway.com/national/portugal/portuguese-liga-/20172018/regular-season/r41648/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:por(?:tugal)?|primeira(?:.liga)?)(?: +(.+))?$/i,
+    'name': 'POR',
+  },
 ];
 
 /**
