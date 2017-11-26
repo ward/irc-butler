@@ -25,7 +25,7 @@ const cl = new Soccerway({
   'D': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-d/g11483/',
   'E': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-e/g11484/',
   'F': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-f/g11485/',
-  'G': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-f/g11485/',
+  'G': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-g/g11486/',
   'H': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-h/g11487/',
   'stages': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/s14294/final-stages/'
 });
@@ -116,11 +116,33 @@ function decideWhichToShow(ranks, who) {
   }
 }
 
+const uefa = new Soccerway({
+  'A': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-a/g8854/',
+  'B': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-b/g8855/',
+  'C': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-c/g8856/',
+  'D': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-d/g8857/',
+  'E': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-e/g8858/',
+  'F': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-f/g8859/',
+  'G': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-g/g8860/',
+  'H': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-h/g8861/',
+  'I': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-i/g8862/',
+});
+
+const uefaGroupMatcher = /^!(?:rank|stand)(?:ings?)? uefa ([A-I])$/i;
+
+const conmebol = new Soccerway({
+  'main': 'http://int.soccerway.com/international/south-america/wc-qualifying-south-america/2018-russia/1st-round/r31495/'
+});
+
+const conmebolGroupMatcher = /^!(?:rank|stand)(?:ings?)? conmebol$/i;
+
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
     let clGroupMatch = trimmedText.match(clGroupMatcher);
     let elGroupMatch = trimmedText.match(elGroupMatcher);
+    let uefaGroupMatch = trimmedText.match(uefaGroupMatcher);
+    let conmebolGroupMatch = trimmedText.match(conmebolGroupMatcher);
     if (clGroupMatch !== null) {
       let group = clGroupMatch[1].toUpperCase();
       cl.syncIfNeeded(group, function() {
@@ -135,11 +157,23 @@ exports.activateOn = function(client) {
         res = res.ranks.map(oneTeamToString).join('; ');
         client.say(to, '[GROUP ' + group + '] ' + res);
       });
+    } else if (uefaGroupMatch !== null) {
+      let group = uefaGroupMatch[1].toUpperCase();
+      uefa.syncIfNeeded(group, function() {
+        let res = uefa.getGroup(group);
+        res = res.ranks.map(oneTeamToString).join('; ');
+        client.say(to, '[GROUP ' + group + '] ' + res);
+      });
+    } else if (conmebolGroupMatch !== null) {
+      conmebol.syncIfNeeded('main', function() {
+        let res = conmebol.getGroup('main');
+        res = res.ranks.map(oneTeamToString).join('; ');
+        client.say(to, '[CONMEBOL] ' + res);
+      });
     } else {
       for (let i = 0; i < leagues.length; i++) {
         let match = trimmedText.match(leagues[i].matcher);
         if (match !== null) {
-          console.log(match);
           leagues[i].soccerway.syncIfNeeded('1', function() {
             let res = leagues[i].soccerway.getGroup('1');
             res = decideWhichToShow(res.ranks, match[1]).map(oneTeamToString).join('; ');
