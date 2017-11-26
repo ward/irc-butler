@@ -186,13 +186,17 @@ exports.activateOn = function(client) {
   });
 };
 exports.info = {
-  id: 'clel',
-  version: '0.0.1',
-  description: 'CL and EL info',
+  id: 'rank',
+  version: '0.1.0',
+  description: 'Show ranking for various leagues and competitions',
   commands: [
     {
-      trigger: '!stand(ings) CL/EL GROUPLETTER',
+      trigger: '!rank CL/EL GROUPLETTER',
       description: 'Show standings for GROUP'
+    },
+    {
+      trigger: '!rank LEAGUE [POSITION|TEAM]',
+      description: ' Show league standings or center it around a certain position/team.'
     },
   ]
 };
