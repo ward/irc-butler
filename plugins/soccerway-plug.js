@@ -62,7 +62,7 @@ const leagues = [
     'soccerway': new Soccerway({
       '1': 'http://int.soccerway.com/national/belgium/pro-league/20172018/regular-season/r41608/',
     }),
-    'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?: +(.+))?$/i,
+    'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?:ium|ie)?(?: +(.+))?$/i,
     'name': 'BEL',
   },
   {
@@ -76,7 +76,7 @@ const leagues = [
     'soccerway': new Soccerway({
       '1': 'http://int.soccerway.com/national/germany/bundesliga/20172018/regular-season/r41485/',
     }),
-    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger|bund(?:es)?)(?: +(.+))?$/i,
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger|bund(?:es|esliga)?)(?: +(.+))?$/i,
     'name': 'DEU',
   },
   {

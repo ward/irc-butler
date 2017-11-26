@@ -139,6 +139,7 @@ const eplShortcut = /^epl$/i;
 const ligaShortcut = /^(?:la ?)?liga$/i;
 const bundesShortcut = /^bundes(?:liga)?$/i;
 const mlsShortcut = /^mls$/i;
+const serieaShortcut = /^serie(?: |-)a$/i;
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, message) {
@@ -165,6 +166,8 @@ exports.activateOn = function(client) {
       doGames('Spain', 'Liga BBVA', client, to);
     } else if (message.search(bundesShortcut) > -1) {
       doGames('Germany', 'Bundesliga', client, to);
+    } else if (message.search(serieaShortcut) > -1) {
+      doGames('Italy', 'Serie A', client, to);
     } else if (message.search(mlsShortcut) > -1) {
       // Use search here instead of doGames since MLS can also have playoffs.
       // These playoffs are in USA>Major League Soccer:: play-off
