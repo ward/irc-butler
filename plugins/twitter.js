@@ -2,14 +2,11 @@
 
 let config = require('config');
 
-let Twitter = require('twitter-node-client').Twitter;
+let Twitter = require('twitter');
+let he = require('he');
 
 let twitterconfig = config.get('bot.twitter');
 let twitter = null;
-
-// Now just use
-// twitter.getTweet({ id: '1111111111'}, error, success);
-// For details see https://dev.twitter.com/rest/reference/get/statuses/show/%3Aid
 
 const tweetRegex = /https?:\/\/twitter\.com\/(\S+?)\/status\/(\d+)/;
 function matchTweet(text) {
@@ -34,22 +31,23 @@ exports.activateOn = function(client) {
     if (tweetid === null) {
       return;
     }
-    let fail = function(err, response, body) {
-      console.error('Failed to get tweet info');
-      console.error(err);
-      console.error(response);
-      console.error(body);
-    };
-    let success = function(rawdata) {
-      let data = JSON.parse(rawdata);
-      client.say(to, '[TWITTER] @' + data.user.screen_name + ': ' + data.text.replace(/\n|\r/g, ' '));
-    };
-    twitter.getTweet({ id: tweetid }, fail, success);
+    twitter.get('statuses/show', {'id': tweetid})
+      .then(function(tweet) {
+        let date = new Date(tweet.created_at);
+        date = date.toISOString().slice(0, 10);
+        let text = tweet.text.replace(/\n|\r/g, ' ');
+        text = he.decode(text);
+        client.say(to, '[TWITTER] @' + tweet.user.screen_name + ': ' + text + ' (' + date + ')');
+      })
+      .catch(function(err) {
+        console.error('Failed to get tweet info');
+        console.error(err);
+      });
   });
 };
 exports.info = {
   id: 'twitter',
-  version: '0.0.1',
+  version: '0.1.0',
   description: 'Gets information about a tweet link',
   commands: []
 };

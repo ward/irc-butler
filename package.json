@@ -19,8 +19,9 @@
     "fuzzy": "0.1.3",
     "irc": "0.5.2",
     "mathjs": "3.8.1",
-    "twitter-node-client": "0.0.6",
-    "request": "2.79.0"
+    "twitter": "1.7.1",
+    "request": "2.79.0",
+    "he": "1.1.1"
   },
   "devDependencies": {
     "jsdoc": "*",

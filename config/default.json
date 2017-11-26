@@ -22,10 +22,10 @@
       "soccerway-plug"
     ],
     "twitter": {
-      "consumerKey": null,
-      "consumerSecret": null,
-      "accessToken": null,
-      "accessTokenSecret": null
+      "consumer_key": null,
+      "consumer_secret": null,
+      "access_token_key": null,
+      "access_token_secret": null
     },
     "strava": {
       "access_token": null
