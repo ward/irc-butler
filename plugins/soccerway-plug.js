@@ -50,16 +50,44 @@ const el = new Soccerway({
 
 const elGroupMatcher = /^!(?:rank|stand)(?:ings?)? +el +([A-L])$/i;
 
-const epl = new Soccerway({
-  '1': 'http://int.soccerway.com/national/england/premier-league/20172018/regular-season/r41547/',
-});
-const eplMatcher = /^!(?:rank|stand)(?:ings?)? +epl(?: +(.+))?$/i;
+const leagues = [
+  {
+    'soccerway': new Soccerway({
+      '1': 'http://int.soccerway.com/national/england/premier-league/20172018/regular-season/r41547/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +epl(?: +(.+))?$/i,
+    'name': 'EPL',
+  },
+  {
+    'soccerway': new Soccerway({
+      '1': 'http://int.soccerway.com/national/belgium/pro-league/20172018/regular-season/r41608/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?: +(.+))?$/i,
+    'name': 'BEL',
+  },
+  {
+    'soccerway': new Soccerway({
+      '1': 'http://int.soccerway.com/national/spain/primera-division/20172018/regular-season/r41509/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:spa(?:in)?|(?:la ?)?liga)(?: +(.+))?$/i,
+    'name': 'LIGA',
+  },
+  {
+    'soccerway': new Soccerway({
+      '1': 'http://int.soccerway.com/national/germany/bundesliga/20172018/regular-season/r41485/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger|bund(?:es)?)(?: +(.+))?$/i,
+    'name': 'DEU',
+  },
+];
 
 /**
- * who can be:
+ * @param ranks is the ranks result of a Soccerway group
+ * @param who can be:
  * - undefined: first 6 are picked
  * - a (partial) team name: name is matched, position found, function called with position
  * - a number: position to show, 5 surrounding it will also be shown
+ * @return up to 6 positions of the ranks result
  */
 function decideWhichToShow(ranks, who) {
   if (who === undefined) {
@@ -93,7 +121,6 @@ exports.activateOn = function(client) {
     let trimmedText = text.trim();
     let clGroupMatch = trimmedText.match(clGroupMatcher);
     let elGroupMatch = trimmedText.match(elGroupMatcher);
-    let eplMatch = trimmedText.match(eplMatcher);
     if (clGroupMatch !== null) {
       let group = clGroupMatch[1].toUpperCase();
       cl.syncIfNeeded(group, function() {
@@ -108,12 +135,19 @@ exports.activateOn = function(client) {
         res = res.ranks.map(oneTeamToString).join('; ');
         client.say(to, '[GROUP ' + group + '] ' + res);
       });
-    } else if (eplMatch !== null) {
-      epl.syncIfNeeded('1', function() {
-        let res = epl.getGroup('1');
-        res = decideWhichToShow(res.ranks, eplMatch[1]).map(oneTeamToString).join('; ');
-        client.say(to, '[EPL] ' + res);
-      });
+    } else {
+      for (let i = 0; i < leagues.length; i++) {
+        let match = trimmedText.match(leagues[i].matcher);
+        if (match !== null) {
+          console.log(match);
+          leagues[i].soccerway.syncIfNeeded('1', function() {
+            let res = leagues[i].soccerway.getGroup('1');
+            res = decideWhichToShow(res.ranks, match[1]).map(oneTeamToString).join('; ');
+            client.say(to, '[' + leagues[i].name + '] ' + res);
+          });
+          break;
+        }
+      }
     }
   });
 };
