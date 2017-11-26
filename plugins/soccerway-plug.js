@@ -62,7 +62,7 @@ const leagues = [
     'soccerway': new Soccerway({
       '1': 'http://int.soccerway.com/national/belgium/pro-league/20172018/regular-season/r41608/',
     }),
-    'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?:ium|ie)?(?: +(.+))?$/i,
+    'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?:gium|gie)?(?: +(.+))?$/i,
     'name': 'BEL',
   },
   {
