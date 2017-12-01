@@ -144,33 +144,40 @@ function decideWhichToShow(ranks, who) {
   }
 }
 
-const uefa = new Soccerway({
-  'A': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-a/g8854/',
-  'B': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-b/g8855/',
-  'C': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-c/g8856/',
-  'D': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-d/g8857/',
-  'E': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-e/g8858/',
-  'F': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-f/g8859/',
-  'G': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-g/g8860/',
-  'H': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-h/g8861/',
-  'I': 'http://int.soccerway.com/international/europe/wc-qualifying-europe/2018-russia/1st-round/group-i/g8862/',
+const wc = new Soccerway({
+  'A': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-a/g8870/',
+  'B': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-b/g8871/',
+  'C': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-c/g8872/',
+  'D': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-d/g8873/',
+  'E': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-e/g8874/',
+  'F': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-f/g8875/',
+  'G': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-g/g8876/',
+  'H': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-h/g8877/',
+  'stages': 'http://int.soccerway.com/international/world/world-cup/2018-russia/s10549/final-stages/'
 });
 
-const uefaGroupMatcher = /^!(?:rank|stand)(?:ings?)? uefa ([A-I])$/i;
+const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
+const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
 
-const conmebol = new Soccerway({
-  'main': 'http://int.soccerway.com/international/south-america/wc-qualifying-south-america/2018-russia/1st-round/r31495/'
-});
-
-const conmebolGroupMatcher = /^!(?:rank|stand)(?:ings?)? conmebol$/i;
+function wcGamesToString(games) {
+  function cleanDate(dateString) {
+    return dateString.slice(0, -3);
+  }
+  let res = '';
+  for (let i = 0; i < games.length; i++) {
+    let game = games[i];
+    res += '(' + cleanDate(game.date) + ') ' + game.home + ' ' + game.score + ' ' + game.away + ' ';
+  }
+  return res;
+}
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
     let clGroupMatch = trimmedText.match(clGroupMatcher);
     let elGroupMatch = trimmedText.match(elGroupMatcher);
-    let uefaGroupMatch = trimmedText.match(uefaGroupMatcher);
-    let conmebolGroupMatch = trimmedText.match(conmebolGroupMatcher);
+    let wcGroupMatch = trimmedText.match(wcGroupMatcher);
+    let wcStagesMatch = trimmedText.match(wcStagesMatcher);
     if (clGroupMatch !== null) {
       let group = clGroupMatch[1].toUpperCase();
       cl.syncIfNeeded(group, function() {
@@ -185,19 +192,35 @@ exports.activateOn = function(client) {
         res = res.ranks.map(oneTeamToString).join('; ');
         client.say(to, '[GROUP ' + group + '] ' + res);
       });
-    } else if (uefaGroupMatch !== null) {
-      let group = uefaGroupMatch[1].toUpperCase();
-      uefa.syncIfNeeded(group, function() {
-        let res = uefa.getGroup(group);
+    } else if (wcGroupMatch !== null) {
+      let group = wcGroupMatch[1].toUpperCase();
+      wc.syncIfNeeded(group, function() {
+        let res = wc.getGroup(group);
         res = res.ranks.map(oneTeamToString).join('; ');
         client.say(to, '[GROUP ' + group + '] ' + res);
       });
-    } else if (conmebolGroupMatch !== null) {
-      conmebol.syncIfNeeded('main', function() {
-        let res = conmebol.getGroup('main');
-        res = res.ranks.map(oneTeamToString).join('; ');
-        client.say(to, '[CONMEBOL] ' + res);
-      });
+    } else if (wcStagesMatch !== null) {
+      let stage = wcStagesMatch[1];
+      // Can be fuzzy because we break after the first match
+      // [Regex match, name, slicebegin, sliceend]
+      let stageMatchers = [
+        [/8|eight|16/i, 'R16', 8, 16],
+        [/quarter|4|Q/i, 'QF', 4, 8],
+        [/semi|2|half/i, 'SF', 2, 4],
+        [/3|third|three/i, '3RD', 1, 2],
+        [/final|end|cup/i, 'FINAL', 0, 1]
+      ];
+      for (let i = 0; i < stageMatchers.length; i++) {
+        let match = stage.match(stageMatchers[i][0]);
+        if (match !== null) {
+          wc.syncIfNeeded('stages', function() {
+            let games = wc.getStages();
+            let relevantGames = games.slice(stageMatchers[i][2], stageMatchers[i][3]);
+            client.say(to, '[' + stageMatchers[i][1] + '] ' + wcGamesToString(relevantGames));
+          });
+          break;
+        }
+      }
     } else {
       for (let i = 0; i < leagues.length; i++) {
         let match = trimmedText.match(leagues[i].matcher);
