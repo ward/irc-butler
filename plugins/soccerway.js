@@ -167,6 +167,7 @@ class Soccerway {
    * Called with the html source of a knockout round stages. Returns games.
    */
   parseStages(data) {
+    let self = this;
     let loaded = $.load(data);
 
     let tables = loaded('table.matches tbody');
@@ -176,7 +177,7 @@ class Soccerway {
       let rows = $('tr', table);
       rows.each(function() {
         let row = $(this);
-        games.push(this.parseGame(row));
+        games.push(self.parseGame(row));
       });
     });
     return games;
