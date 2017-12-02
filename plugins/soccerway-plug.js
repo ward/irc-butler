@@ -17,6 +17,12 @@ function oneTeamToString(team) {
     team.gf + '-' + team.ga;
   return result;
 }
+function oneGameToString(game) {
+  if (game.score.search(':') > -1) {
+    return game.date + ' ' + game.score + ' ' + game.home + '-' + game.away;
+  }
+  return game.home + ' ' + game.score + ' ' + game.away;
+}
 
 const cl = new Soccerway({
   'A': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/group-stage/group-a/g11480/',
@@ -159,18 +165,6 @@ const wc = new Soccerway({
 const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
 const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
 
-function wcGamesToString(games) {
-  function cleanDate(dateString) {
-    return dateString.slice(0, -3);
-  }
-  let res = '';
-  for (let i = 0; i < games.length; i++) {
-    let game = games[i];
-    res += '(' + cleanDate(game.date) + ') ' + game.home + ' ' + game.score + ' ' + game.away + ' ';
-  }
-  return res;
-}
-
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
@@ -182,22 +176,32 @@ exports.activateOn = function(client) {
       let group = clGroupMatch[1].toUpperCase();
       cl.syncIfNeeded(group, function() {
         let res = cl.getGroup(group);
-        res = res.ranks.map(oneTeamToString).join('; ');
+        res = res.ranks
+          .map(oneTeamToString)
+          .join('; ');
         client.say(to, '[GROUP ' + group + '] ' + res);
       });
     } else if (elGroupMatch !== null) {
       let group = elGroupMatch[1].toUpperCase();
       el.syncIfNeeded(group, function() {
         let res = el.getGroup(group);
-        res = res.ranks.map(oneTeamToString).join('; ');
+        res = res.ranks
+          .map(oneTeamToString)
+          .join('; ');
         client.say(to, '[GROUP ' + group + '] ' + res);
       });
     } else if (wcGroupMatch !== null) {
       let group = wcGroupMatch[1].toUpperCase();
       wc.syncIfNeeded(group, function() {
         let res = wc.getGroup(group);
-        res = res.ranks.map(oneTeamToString).join('; ');
-        client.say(to, '[GROUP ' + group + '] ' + res);
+        let positions = res.ranks
+          .map(oneTeamToString)
+          .join('; ');
+        let games = res.games
+          .map(oneGameToString)
+          .map(s => s.replace('/18',''))
+          .join('; ');
+        client.say(to, '[GROUP ' + group + '] ' + positions + ' --- ' + games);
       });
     } else if (wcStagesMatch !== null) {
       let stage = wcStagesMatch[1];
@@ -216,7 +220,11 @@ exports.activateOn = function(client) {
           wc.syncIfNeeded('stages', function() {
             let games = wc.getStages();
             let relevantGames = games.slice(stageMatchers[i][2], stageMatchers[i][3]);
-            client.say(to, '[' + stageMatchers[i][1] + '] ' + wcGamesToString(relevantGames));
+            let relevantGamesString = relevantGames
+              .map(oneGameToString)
+              .map(s => s.replace('/18', ''))
+              .join('; ');
+            client.say(to, '[' + stageMatchers[i][1] + '] ' + relevantGamesString);
           });
           break;
         }

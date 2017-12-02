@@ -14,7 +14,7 @@ p.activateOn(fakeClient);
 //fakeClient.triggerMessage('', '', '!rank liga valencia');
 //fakeClient.triggerMessage('', '', '!rank wc A');
 //fakeClient.triggerMessage('', '', '!rank wc d');
-//fakeClient.triggerMessage('', '', '!rank worldc E');
+fakeClient.triggerMessage('', '', '!rank worldc E');
 //fakeClient.triggerMessage('', '', '!rank world-cup F');
 //fakeClient.triggerMessage('', '', '!rank wc quarter');
 fakeClient.triggerMessage('', '', '!wc 8');
