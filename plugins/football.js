@@ -163,7 +163,7 @@ exports.activateOn = function(client) {
     } else if (message.search(eplShortcut) > -1) {
       doGames('England', 'Premier League', client, to);
     } else if (message.search(ligaShortcut) > -1) {
-      doGames('Spain', 'Liga BBVA', client, to);
+      doGames('Spain', 'LaLiga Santander', client, to);
     } else if (message.search(bundesShortcut) > -1) {
       doGames('Germany', 'Bundesliga', client, to);
     } else if (message.search(serieaShortcut) > -1) {
