@@ -1,8 +1,14 @@
 {
   "name": "irc-butler",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "IRC bot",
   "main": "main.js",
+  "homepage": "https://github.com/ward/irc-butler",
+  "bugs": "https://github.com/ward/irc-butler/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ward/irc-butler.git"
+  },
   "scripts": {
     "doc": "./node_modules/.bin/jsdoc --package ./package.json --readme ./README.md --destination ./documentation *.js plugins/*.js",
     "test": "./node_modules/.bin/eslint *.js plugins/*.js"
@@ -10,21 +16,21 @@
   "author": {
     "name": "Ward Muylaert",
     "email": "ward.muylaert@gmail.com",
-    "url": "http://blog.wxm.be/"
+    "url": "https://blog.wxm.be/"
   },
   "license": "GPL-3.0",
   "dependencies": {
     "cheerio": "0.22.0",
-    "config": "1.24.0",
+    "config": "1.29.0",
     "fuzzy": "0.1.3",
     "irc": "0.5.2",
-    "mathjs": "3.8.1",
+    "mathjs": "3.18.1",
     "twitter": "1.7.1",
-    "request": "2.79.0",
+    "request": "2.83.0",
     "he": "1.1.1"
   },
   "devDependencies": {
-    "jsdoc": "*",
-    "eslint": "*"
+    "eslint": "^4.14.0",
+    "jsdoc": "*"
   }
 }
