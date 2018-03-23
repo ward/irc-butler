@@ -29,6 +29,7 @@ function getClubLeaderboard(id, success, sorting) {
     url: url,
     headers: {
       'Accept': 'text/javascript, application/javascript, application/ecmascript, application/x-ecmascript',
+      'X-Requested-With': 'XmlHttpRequest',
     }
   };
   request(options, function(err, response, body) {

@@ -11,7 +11,7 @@ strava.activateOn(fakeClient);
 //fakeClient.triggerMessage('','', 'https://www.strava.com/clubs/freenode_running');
 //fakeClient.triggerMessage('', '', 'https://www.strava.com/clubs/sqwheodabvlbcsdf');
 //fakeClient.triggerMessage('','','https://www.strava.com/clubs/CenturianRunners');
-//fakeClient.triggerMessage('','','!strava');
+fakeClient.triggerMessage('','','!strava');
 
 //fakeClient.triggerMessage('','','https://www.strava.com/activities/810654646');
 //fakeClient.triggerMessage('','','https://www.strava.com/activities/812589430/overview');
