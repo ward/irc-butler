@@ -19,7 +19,13 @@ function oneTeamToString(team) {
 }
 function oneGameToString(game) {
   if (game.score.search(':') > -1) {
-    return game.date + ' ' + game.score + ' ' + game.home + '-' + game.away;
+    // Convoluted hacky fixing of the timezone...
+    let time = game.score;
+    let hour = parseInt(time.substring(0, time.search(':')));
+    hour = hour - 1;// time offset
+    let minutes = time.substring(time.search(':'));
+    time = hour.toString() + minutes;
+    return game.date + ' ' + time + ' ' + game.home + '-' + game.away;
   }
   return game.home + ' ' + game.score + ' ' + game.away;
 }
