@@ -133,6 +133,7 @@ const gameTrigger = /^!game/i;
 const gamesTrigger = /^!games/i;
 const countryMatcher = /^-l (.+)$/i;
 const competitionMatcher = /^-l (.+?)\/(.+)$/i;
+const wcShortcut = /^w(?:orld)?[. -]*c(?:up)?$/i;
 const clShortcut = /^u?cl$/i;
 const elShortcut = /^el$/i;
 const eplShortcut = /^epl$/i;
@@ -156,6 +157,8 @@ exports.activateOn = function(client) {
     let competitionmatch = message.match(competitionMatcher);
     if (message === '') {
       doCountries(client, to);
+    } else if (message.search(wcShortcut) > -1) {
+      doAllFromCountry('World Cup', client, to);
     } else if (message.search(clShortcut) > -1) {
       doAllFromCountry('Champions League', client, to);
     } else if (message.search(elShortcut) > -1) {
