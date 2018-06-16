@@ -4,11 +4,13 @@
  */
 'use strict';
 
+const util = require('util');
+
 const request = require('request');
 
 let standingsCache;
 let lastUpdate = 0;
-const CACHE_TIME = 1000 * 60 * 10;
+const CACHE_TIME = 1000 * 60 * 5;
 
 /**
  * Given the dump of fetching the standings, tries to extract relevant info.
@@ -69,6 +71,7 @@ function fetchStanding(poolid, κ, κfail) {
     κ(standingsCache);
     return;
   }
+  util.log('Updating superbru cache.');
   let options = {
     url: `https://www.superbru.com/worldcup_predictor/ajax/pool_leaderboard.php?pool_id=${poolid}&edition_id=2&round_id=1`,
     headers: {
@@ -80,7 +83,18 @@ function fetchStanding(poolid, κ, κfail) {
       κfail(error);
       return;
     }
+    if (body.indexOf('"data":"Not logged in"') > -1) {
+      κfail("Not logged in error");
+      return;
+    }
+
     let standings = parseStanding(body);
+
+    if (standings.length === 0) {
+      κfail("Standings are empty?");
+      return;
+    }
+
     standingsCache = standings;
     lastUpdate = Date.now();
     κ(standings);
@@ -96,7 +110,7 @@ function showStanding(poolid, client, target) {
     client.say(target, output);
   };
   let κfail = function(err) {
-    console.warn(err);
+    util.log(err);
     client.say(target, 'Something went wrong, sorry :/');
   };
   fetchStanding(poolid, κ, κfail);
@@ -105,7 +119,7 @@ function showStanding(poolid, client, target) {
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, message) {
     message = message.trim();
-    if (message.search(/^!(?:predict(?:or)?|[fp]wc)$/i) > -1) {
+    if (message.search(/^!(?:predict(?:or)?|[fp]wc|(?:super)?bru)$/i) > -1) {
       // Default action. Before starting probably "new entries"
       showStanding(11859176, client, to);
     }
@@ -113,7 +127,7 @@ exports.activateOn = function(client) {
 };
 exports.info = {
   id: 'worldcuppredictor',
-  version: '0.0.1',
+  version: '0.0.2',
   description: 'World Cup Predictor',
   commands: [
     {
