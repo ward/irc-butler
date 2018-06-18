@@ -7,7 +7,6 @@
 const util = require('util');
 
 const request = require('request');
-const ircColors = require('irc-colors');
 
 let standingsCache;
 let lastUpdate = 0;
@@ -50,7 +49,18 @@ function parseUsername(usernameDump) {
   if (cleaned.indexOf('<') > -1) {
     return cleaned.substring(0, cleaned.indexOf('<'));
   }
+  cleaned = insertZeroWidthSpace(cleaned, 2);
   return cleaned;
+}
+
+/**
+ * Add zero width space before letter at pos (1 index)
+ */
+function insertZeroWidthSpace(text, pos) {
+  let character = "\u200B";
+  let start = text.slice(0, pos - 1);
+  let end = text.slice(pos - 1);
+  return start + character + end;
 }
 
 /**
@@ -110,7 +120,7 @@ function fetchStanding(poolid, κ, κfail) {
 function showStanding(poolid, client, target) {
   let κ = function(standings) {
     let standingToText = function(standing, idx) {
-      return '(' + (idx+1) + ') ' + ircColors.bold(standing.name) + ' ' + standing.points;
+      return '(' + (idx+1) + ') ' + standing.name + ' ' + standing.points;
     };
     let output = standings.map(standingToText).join(' ');
     client.say(target, output);
