@@ -135,7 +135,7 @@ function showStanding(poolid, client, target) {
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, message) {
     message = message.trim();
-    if (message.search(/^!(?:predict(?:or|ions?)?|[fp]wc|(?:super)?bru)$/i) > -1) {
+    if (message.search(/^!(?:pred.*|[fp]wc|(?:super)?bru)$/i) > -1) {
       // Default action. Before starting probably "new entries"
       showStanding(11859176, client, to);
     }
