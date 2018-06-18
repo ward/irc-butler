@@ -7,6 +7,7 @@
 const util = require('util');
 
 const request = require('request');
+const ircColors = require('irc-colors');
 
 let standingsCache;
 let lastUpdate = 0;
@@ -56,7 +57,12 @@ function parseUsername(usernameDump) {
  * Helper function for parseStanding
  */
 function parsePoints(pointsDump) {
-  return pointsDump.replace("<td class='text-center'>", '');
+  let points = pointsDump.replace("<td class='text-center'>", '');
+  points = points.substring(0, points.length-1);
+  if (points.endsWith('.0')) {
+    points = points.substring(0, points.length - 2);
+  }
+  return points;
 }
 
 /**
@@ -104,7 +110,7 @@ function fetchStanding(poolid, κ, κfail) {
 function showStanding(poolid, client, target) {
   let κ = function(standings) {
     let standingToText = function(standing, idx) {
-      return '(' + (idx+1) + ') ' + standing.name + ' ' + standing.points + 'pts';
+      return '(' + (idx+1) + ') ' + ircColors.bold(standing.name) + ' ' + standing.points;
     };
     let output = standings.map(standingToText).join(' ');
     client.say(target, output);
