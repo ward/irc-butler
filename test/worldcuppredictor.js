@@ -6,3 +6,4 @@ let fakeClient = require('./fakeClient.js').fakeClient;
 fantasypl.activateOn(fakeClient);
 
 fakeClient.triggerMessage('', '', '!predict');
+fakeClient.triggerMessage('', '', '!tie');

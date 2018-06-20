@@ -1,6 +1,6 @@
 /**
- * Fantasy Premier League plugin
- * @module plugins/fantasypl
+ * World Cup Predictor plugin
+ * @module plugins/worldcuppredictor
  */
 'use strict';
 
@@ -139,11 +139,20 @@ exports.activateOn = function(client) {
       // Default action. Before starting probably "new entries"
       showStanding(11859176, client, to);
     }
+    if (message.search(/^!(?:wc )?tie(?:break|breaker)?s?$/i) > -1) {
+      let out = '[WCTIEBREAKER] ';
+      out += 'pts-all, gd-all, goals-all; ';
+      out += 'pts-teams, gd-teams, goals-teams; ';
+      out += 'fair play pts (yellow = -1, double yellow = -3, direct-red = -4, yellow+direct red = -5); ';
+      out += 'drawing lots; ';
+      out += '→ https://en.wikipedia.org/wiki/2018_FIFA_World_Cup#Tiebreakers';
+      client.say(to, out);
+    }
   });
 };
 exports.info = {
   id: 'worldcuppredictor',
-  version: '0.0.2',
+  version: '0.1.0',
   description: 'World Cup Predictor',
   commands: [
     {
