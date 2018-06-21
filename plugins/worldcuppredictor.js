@@ -122,8 +122,12 @@ function showStanding(poolid, client, target) {
     let standingToText = function(standing, idx) {
       return '(' + (idx+1) + ') ' + standing.name + ' ' + standing.points;
     };
-    let output = standings.map(standingToText).join(' ');
-    client.say(target, output);
+    let standingsText = standings.map(standingToText);
+    while (standingsText.length > 0) {
+      let output = standingsText.slice(0, 20).join(' ');
+      client.say(target, output);
+      standingsText = standingsText.slice(20);
+    }
   };
   let κfail = function(err) {
     util.log(err);
