@@ -89,7 +89,7 @@ function fetchStanding(poolid, κ, κfail) {
   }
   util.log('Updating superbru cache.');
   let options = {
-    url: `https://www.superbru.com/worldcup_predictor/ajax/pool_leaderboard.php?pool_id=${poolid}&edition_id=2&round_id=4`,
+    url: `https://www.superbru.com/worldcup_predictor/ajax/pool_leaderboard.php?pool_id=${poolid}&edition_id=2&round_id=5`,
     headers: {
       'Cookie': ''
     }
