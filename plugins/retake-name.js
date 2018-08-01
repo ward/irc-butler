@@ -24,6 +24,10 @@ function check_done() {
   lastnickreclaim = (new Date()).getTime();
 }
 
+function is_nickserv(raw_message) {
+  return raw_message.nick === 'NickServ' && raw_message.user === 'NickServ' && raw_message.host === 'services.';
+}
+
 exports.activateOn = function(client) {
   // Check every message
   client.addListener('message', function(_from, _to, _text) {
@@ -37,6 +41,16 @@ exports.activateOn = function(client) {
         delete client.opt.nickMod;
       }
       client.send('NICK', nick);
+    }
+  });
+
+  client.addListener('notice', function(nick, to, text, message) {
+    if (client.nick === to) {
+      if (is_nickserv(message)) {
+        if (text.indexOf('This nickname is registered.') > -1) {
+          client.send(nick, 'identify ' + config.get('bot.nickserv.password'));
+        }
+      }
     }
   });
 };
