@@ -65,59 +65,73 @@ const elGroupMatcher = /^!(?:rank|stand)(?:ings?)? +el +([A-L])$/i;
 const leagues = [
   {
     'soccerway': new Soccerway({
-      '1': 'http://int.soccerway.com/national/england/premier-league/20172018/regular-season/r41547/',
+      '1': 'https://int.soccerway.com/national/england/premier-league/20182019/regular-season/r48730/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +epl(?: +(.+))?$/i,
     'name': 'EPL',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'http://int.soccerway.com/national/belgium/pro-league/20172018/regular-season/r41608/',
+      '1': 'https://int.soccerway.com/national/belgium/pro-league/20182019/regular-season/r48492/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?:gium|gie)?(?: +(.+))?$/i,
     'name': 'BEL',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'http://int.soccerway.com/national/spain/primera-division/20172018/regular-season/r41509/',
+      '1': 'https://int.soccerway.com/national/spain/primera-division/20182019/regular-season/r47983/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:spa(?:in)?|(?:la ?)?liga)(?: +(.+))?$/i,
     'name': 'LIGA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'http://int.soccerway.com/national/germany/bundesliga/20172018/regular-season/r41485/',
+      '1': 'https://int.soccerway.com/national/germany/bundesliga/20182019/regular-season/r47657/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger|bund(?:es|esliga)?)(?: +(.+))?$/i,
     'name': 'DEU',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'http://int.soccerway.com/national/netherlands/eredivisie/20172018/regular-season/r42274/',
+      '1': 'https://int.soccerway.com/national/netherlands/eredivisie/20182019/regular-season/r47971/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:nld|ned|netherlands|ere(?:divisie)?)(?: +(.+))?$/i,
     'name': 'NLD',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'http://int.soccerway.com/national/italy/serie-a/20172018/regular-season/r42011/',
+      '1': 'https://int.soccerway.com/national/italy/serie-a/20182019/regular-season/r48235/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:ita(?:ly)?|serie ?a?)(?: +(.+))?$/i,
     'name': 'ITA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'http://int.soccerway.com/national/france/ligue-1/20172018/regular-season/r41646/',
+      '1': 'https://int.soccerway.com/national/france/ligue-1/20182019/regular-season/r48044/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:fra(?:nce)?|ligue ?1?)(?: +(.+))?$/i,
     'name': 'FRA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'http://int.soccerway.com/national/portugal/portuguese-liga-/20172018/regular-season/r41648/',
+      '1': 'https://int.soccerway.com/national/portugal/portuguese-liga-/20182019/regular-season/r47741/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:por(?:tugal)?|primeira(?:.liga)?)(?: +(.+))?$/i,
     'name': 'POR',
+  },
+  {
+    'soccerway': new Soccerway({
+      '1': 'https://int.soccerway.com/national/england/championship/20182019/regular-season/r48274/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:championship|e?pl2|eng(?:land)?2)(?: +(.+))?$/i,
+    'name': 'ENG2',
+  },
+  {
+    'soccerway': new Soccerway({
+      '1': 'https://int.soccerway.com/national/ukraine/premier-league/20182019/regular-season/r47821/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:ukr(?:aine)?|upl)(?: +(.+))?$/i,
+    'name': 'UKR',
   },
 ];
 
