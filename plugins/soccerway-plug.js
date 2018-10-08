@@ -88,7 +88,7 @@ const leagues = [
     'soccerway': new Soccerway({
       '1': 'https://int.soccerway.com/national/germany/bundesliga/20182019/regular-season/r47657/',
     }),
-    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger|bund(?:es|esliga)?)(?: +(.+))?$/i,
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger(?:many?)?|bund(?:es|esliga)?)(?: +(.+))?$/i,
     'name': 'DEU',
   },
   {
