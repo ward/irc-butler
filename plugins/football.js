@@ -145,6 +145,12 @@ const serieaShortcut = /^serie(?: |-)a$/i;
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, message) {
     message = message.trim();
+
+    if (message.toLowerCase() === '!genk') {
+      doSearch('genk', client, to);
+      return;
+    }
+
     if (message.search(gamesTrigger) > -1) {
       message = message.substring(7);
     } else if (message.search(gameTrigger) > -1) {
