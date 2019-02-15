@@ -44,15 +44,17 @@ exports.activateOn = function(client) {
     }
   });
 
-  client.addListener('notice', function(nick, to, text, message) {
-    if (client.nick === to) {
-      if (is_nickserv(message)) {
-        if (text.indexOf('This nickname is registered.') > -1) {
-          client.send(nick, 'identify ' + config.get('bot.nickserv.password'));
+  if (config.has('bot.nickserv.password')) {
+    client.addListener('notice', function(nick, to, text, message) {
+      if (client.nick === to) {
+        if (is_nickserv(message)) {
+          if (text.indexOf('This nickname is registered.') > -1) {
+            client.send(nick, 'identify ' + config.get('bot.nickserv.password'));
+          }
         }
       }
-    }
-  });
+    });
+  }
 };
 exports.info = {
   id: 'retake-name',
