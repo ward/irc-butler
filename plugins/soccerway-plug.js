@@ -67,7 +67,7 @@ const leagues = [
     'soccerway': new Soccerway({
       '1': 'https://int.soccerway.com/national/england/premier-league/20182019/regular-season/r48730/',
     }),
-    'matcher': /^!(?:rank|stand)(?:ings?)? +epl(?: +(.+))?$/i,
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:eng|england|epl)(?: +(.+))?$/i,
     'name': 'EPL',
   },
   {
