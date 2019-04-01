@@ -72,7 +72,7 @@ const leagues = [
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/belgium/pro-league/20182019/regular-season/r48492/',
+      '1': 'https://int.soccerway.com/national/belgium/pro-league/20182019/play-offs-i/r48491/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?:gium|gie)?(?: +(.+))?$/i,
     'name': 'BEL',
