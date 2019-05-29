@@ -57,7 +57,7 @@ function parseUsername(usernameDump) {
  * Add zero width space before letter at pos (1 index)
  */
 function insertZeroWidthSpace(text, pos) {
-  let character = "\u200B";
+  let character = "\u200D";
   let start = text.slice(0, pos - 1);
   let end = text.slice(pos - 1);
   return start + character + end;
@@ -89,7 +89,7 @@ function fetchStanding(poolid, κ, κfail) {
   }
   util.log('Updating superbru cache.');
   let options = {
-    url: `https://www.superbru.com/worldcup_predictor/ajax/pool_leaderboard.php?pool_id=${poolid}&edition_id=2&round_id=7`,
+    url: `https://www.superbru.com/womensworldcup/ajax/pool_leaderboard.php?pool_id=${poolid}&edition_id=2&round_id=1`,
     headers: {
       'Cookie': ''
     }
@@ -141,7 +141,11 @@ exports.activateOn = function(client) {
     message = message.trim();
     if (message.search(/^!(?:pred.*|[fp]wc|(?:super)?bru)$/i) > -1) {
       // Default action. Before starting probably "new entries"
-      showStanding(11859176, client, to);
+      // For new leagues:
+      // - Update this ID
+      // - Update the pool leaderboard url
+      // - Need to update round number after every round in the tournament
+      showStanding(12039958, client, to);
     }
     if (message.search(/^!(?:wc )?tie(?:break|breaker)?s?$/i) > -1) {
       let out = '[WCTIEBREAKER] ';
