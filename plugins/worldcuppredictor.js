@@ -68,7 +68,10 @@ function insertZeroWidthSpace(text, pos) {
  */
 function parsePoints(pointsDump) {
   let points = pointsDump.replace("<td class='text-center'>", '');
-  points = points.substring(0, points.length-1);
+  // They used to report points to 0.01 precision with the last one always 0,
+  // hence I just cut it off. Now they give just 0.1 precision so I was cutting
+  // off too much.
+  // points = points.substring(0, points.length-1);
   if (points.endsWith('.0')) {
     points = points.substring(0, points.length - 2);
   }
