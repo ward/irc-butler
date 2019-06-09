@@ -171,19 +171,20 @@ function decideWhichToShow(ranks, who) {
 }
 
 const wc = new Soccerway({
-  'A': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-a/g8870/',
-  'B': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-b/g8871/',
-  'C': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-c/g8872/',
-  'D': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-d/g8873/',
-  'E': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-e/g8874/',
-  'F': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-f/g8875/',
-  'G': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-g/g8876/',
-  'H': 'http://int.soccerway.com/international/world/world-cup/2018-russia/group-stage/group-h/g8877/',
-  'stages': 'http://int.soccerway.com/international/world/world-cup/2018-russia/s10549/final-stages/'
+  'A': 'https://int.soccerway.com/international/world/womens-world-cup/2019-france/group-stage/group-a/g13755/',
+  'B': 'https://int.soccerway.com/international/world/womens-world-cup/2019-france/group-stage/group-b/g13756/',
+  'C': 'https://int.soccerway.com/international/world/womens-world-cup/2019-france/group-stage/group-c/g13757/',
+  'D': 'https://int.soccerway.com/international/world/womens-world-cup/2019-france/group-stage/group-d/g13758/',
+  'E': 'https://int.soccerway.com/international/world/womens-world-cup/2019-france/group-stage/group-e/g13759/',
+  'F': 'https://int.soccerway.com/international/world/womens-world-cup/2019-france/group-stage/group-f/g13760/',
+  'stages': 'https://int.soccerway.com/international/world/womens-world-cup/2019-france/s11947/final-stages/'
 });
 
-const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
-const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
+// const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
+// const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
+// Female variant
+const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?(?:w(?:omen)?[. -]*)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
+const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?(?:w(?:omen)?[. -]*)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
@@ -230,7 +231,7 @@ exports.activateOn = function(client) {
       let stageMatchers = [
         [/8|eight|16/i, 'R16', 8, 16],
         [/quarter|4|Q/i, 'QF', 4, 8],
-        [/semi|2|half/i, 'SF', 2, 4],
+        [/semi|2|half|sf/i, 'SF', 2, 4],
         [/3|third|three/i, '3RD', 1, 2],
         [/final|end|cup/i, 'FINAL', 0, 1]
       ];
@@ -242,7 +243,7 @@ exports.activateOn = function(client) {
             let relevantGames = games.slice(stageMatchers[i][2], stageMatchers[i][3]);
             let relevantGamesString = relevantGames
               .map(oneGameToString)
-              .map(s => s.replace('/18', ''))
+              .map(s => s.replace('/19', ''))
               .join('; ');
             client.say(to, '[' + stageMatchers[i][1] + '] ' + relevantGamesString);
           });

@@ -8,3 +8,4 @@ football.activateOn(fakeClient);
 fakeClient.triggerMessage('', '', '!games');
 fakeClient.triggerMessage('', '', '!games England');
 fakeClient.triggerMessage('', '', '!games Liga');
+fakeClient.triggerMessage('', '', '!games wwc');
