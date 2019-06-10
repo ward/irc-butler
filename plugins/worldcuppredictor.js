@@ -156,7 +156,7 @@ exports.activateOn = function(client) {
       out += 'pts-teams, gd-teams, goals-teams; ';
       out += 'fair play pts (yellow = -1, double yellow = -3, direct-red = -4, yellow+direct red = -5); ';
       out += 'drawing lots; ';
-      out += '→ https://en.wikipedia.org/wiki/2018_FIFA_World_Cup#Tiebreakers';
+      out += '→ https://en.wikipedia.org/wiki/2019_FIFA_Women\'s_World_Cup#Tiebreakers';
       client.say(to, out);
     }
   });
