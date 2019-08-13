@@ -19,8 +19,7 @@
       "twitter",
       "strava",
       "elo",
-      "soccerway-plug",
-      "worldcuppredictor"
+      "soccerway-plug"
     ],
     "twitter": {
       "consumer_key": null,
