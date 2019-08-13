@@ -4,8 +4,7 @@
  */
 'use strict';
 
-const http = require('http');
-const https = require('https');
+const request = require('request');
 
 function showStandings(id, client, target) {
   let κ = function(res) {
@@ -26,26 +25,26 @@ function showStandings(id, client, target) {
 }
 
 function fetchLeagueClassicStandings(id, κ, κfail) {
-  const url = 'https://fantasy.premierleague.com/drf/leagues-classic-standings/'
-              + id;
-  https.get(url, function(response) {
-    if (response.statusCode !== 200) {
-      κfail('Incorrect statusCode: ' + response.statusCode + ' (' + http.STATUS_CODES[response.statusCode] + ')');
-    } else {
-      let data = '';
-      response.on('data', function(chunk) {
-        data += chunk;
-      });
-      response.on('end', function() {
-        try {
-          κ(JSON.parse(data));
-        } catch (e) {
-          κfail('Something went wrong... ' + e);
-        }
-      });
+  const opts = {
+  'uri': 'https://fantasy.premierleague.com/api/leagues-classic/'
+              + id + '/standings/',
+    'gzip': true,
+    'headers': {
+      'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0',
     }
-  }).on('error', function() {
-    κfail('https.get() error');
+  };
+  request(opts, function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body);
+      try {
+      κ(JSON.parse(body));
+      } catch (e) {
+        κfail(e);
+      }
+    } else {
+      console.log(error);
+      κfail(error);
+    }
   });
 }
 
@@ -54,13 +53,13 @@ exports.activateOn = function(client) {
     message = message.trim();
     if (message.search(/^!fpl$/i) > -1) {
       // Default action. Before starting probably "new entries"
-      showStandings(1180, client, to);
+      showStandings(43381, client, to);
     }
   });
 };
 exports.info = {
   id: 'fantasypl',
-  version: '0.0.2',
+  version: '0.0.3',
   description: 'Fantasy Premier League.',
   commands: [
     {
