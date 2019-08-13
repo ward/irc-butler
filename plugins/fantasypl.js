@@ -26,23 +26,18 @@ function showStandings(id, client, target) {
 
 function fetchLeagueClassicStandings(id, κ, κfail) {
   const opts = {
-  'uri': 'https://fantasy.premierleague.com/api/leagues-classic/'
-              + id + '/standings/',
+    'uri': 'https://fantasy.premierleague.com/api/leagues-classic/'
+            + id + '/standings/',
     'gzip': true,
-    'headers': {
-      'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0',
-    }
   };
   request(opts, function(error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(body);
       try {
-      κ(JSON.parse(body));
+        κ(JSON.parse(body));
       } catch (e) {
         κfail(e);
       }
     } else {
-      console.log(error);
       κfail(error);
     }
   });
