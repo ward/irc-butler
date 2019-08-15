@@ -31,33 +31,33 @@ function oneGameToString(game) {
 }
 
 const cl = new Soccerway({
-  'A': 'https://int.soccerway.com/international/europe/uefa-champions-league/20182019/group-stage/group-a/g12787/',
-  'B': 'https://int.soccerway.com/international/europe/uefa-champions-league/20182019/group-stage/group-b/g12788/',
-  'C': 'https://int.soccerway.com/international/europe/uefa-champions-league/20182019/group-stage/group-c/g12789/',
-  'D': 'https://int.soccerway.com/international/europe/uefa-champions-league/20182019/group-stage/group-d/g12790/',
-  'E': 'https://int.soccerway.com/international/europe/uefa-champions-league/20182019/group-stage/group-e/g12791/',
-  'F': 'https://int.soccerway.com/international/europe/uefa-champions-league/20182019/group-stage/group-f/g12792/',
-  'G': 'https://int.soccerway.com/international/europe/uefa-champions-league/20182019/group-stage/group-g/g12793/',
-  'H': 'https://int.soccerway.com/international/europe/uefa-champions-league/20182019/group-stage/group-h/g12794/',
-  'stages': 'http://int.soccerway.com/international/europe/uefa-champions-league/20172018/s14294/final-stages/'
+  'A': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-a/g14741/',
+  'B': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-b/g14742/',
+  'C': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-c/g14743/',
+  'D': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-d/g14744/',
+  'E': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-e/g14745/',
+  'F': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-f/g14746/',
+  'G': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-g/g14747/',
+  'H': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-h/g14748/',
+  'stages': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/s17689/final-stages/'
 });
 
 const clGroupMatcher = /^!(?:rank|stand)(?:ings?)? +u?cl +([A-H])$/i;
 
 const el = new Soccerway({
-  'A': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-a/g12848/',
-  'B': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-b/g12849/',
-  'C': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-c/g12850/',
-  'D': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-d/g12851/',
-  'E': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-e/g12852/',
-  'F': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-f/g12853/',
-  'G': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-g/g12854/',
-  'H': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-h/g12855/',
-  'I': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-i/g12856/',
-  'J': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-j/g12857/',
-  'K': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-k/g12858/',
-  'L': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/group-stage/group-l/g12859/',
-  'stages': 'https://int.soccerway.com/international/europe/uefa-cup/20182019/s16183/final-stages/'
+  'A': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-a/g14707/',
+  'B': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-b/g14708/',
+  'C': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-c/g14709/',
+  'D': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-d/g14710/',
+  'E': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-e/g14711/',
+  'F': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-f/g14712/',
+  'G': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-g/g14713/',
+  'H': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-h/g14714/',
+  'I': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-i/g14715/',
+  'J': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-j/g14716/',
+  'K': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-k/g14717/',
+  'L': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-l/g14718/',
+  'stages': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/s17653/final-stages/'
 });
 
 const elGroupMatcher = /^!(?:rank|stand)(?:ings?)? +el +([A-L])$/i;
@@ -65,70 +65,70 @@ const elGroupMatcher = /^!(?:rank|stand)(?:ings?)? +el +([A-L])$/i;
 const leagues = [
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/england/premier-league/20182019/regular-season/r48730/',
+      '1': 'https://int.soccerway.com/national/england/premier-league/20192020/regular-season/r53145/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:eng|england|epl)(?: +(.+))?$/i,
     'name': 'EPL',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/belgium/pro-league/20182019/play-offs-i/r48491/',
+      '1': 'https://int.soccerway.com/national/belgium/pro-league/20192020/regular-season/r53516/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?:gium|gie)?(?: +(.+))?$/i,
     'name': 'BEL',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/spain/primera-division/20182019/regular-season/r47983/',
+      '1': 'https://int.soccerway.com/national/spain/primera-division/20192020/regular-season/r53502/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:spa(?:in)?|(?:la ?)?liga)(?: +(.+))?$/i,
     'name': 'LIGA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/germany/bundesliga/20182019/regular-season/r47657/',
+      '1': 'https://int.soccerway.com/national/germany/bundesliga/20192020/regular-season/r53499/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger(?:many?)?|bund(?:es|esliga)?)(?: +(.+))?$/i,
     'name': 'DEU',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/netherlands/eredivisie/20182019/regular-season/r47971/',
+      '1': 'https://int.soccerway.com/national/netherlands/eredivisie/20192020/regular-season/r54058/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:nld|ned|netherlands|ere(?:divisie)?)(?: +(.+))?$/i,
     'name': 'NLD',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/italy/serie-a/20182019/regular-season/r48235/',
+      '1': 'https://int.soccerway.com/national/italy/serie-a/20192020/regular-season/r54890/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:ita(?:ly)?|serie ?a?)(?: +(.+))?$/i,
     'name': 'ITA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/france/ligue-1/20182019/regular-season/r48044/',
+      '1': 'https://int.soccerway.com/national/france/ligue-1/20192020/regular-season/r53638/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:fra(?:nce)?|ligue ?1?)(?: +(.+))?$/i,
     'name': 'FRA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/portugal/portuguese-liga-/20182019/regular-season/r47741/',
+      '1': 'https://int.soccerway.com/national/portugal/portuguese-liga-/20192020/regular-season/r53517/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:por(?:tugal)?|primeira(?:.liga)?)(?: +(.+))?$/i,
     'name': 'POR',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/england/championship/20182019/regular-season/r48274/',
+      '1': 'https://int.soccerway.com/national/england/championship/20192020/regular-season/r53782/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:championship|e?pl2|eng(?:land)?2)(?: +(.+))?$/i,
     'name': 'ENG2',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/ukraine/premier-league/20182019/regular-season/r47821/',
+      '1': 'https://int.soccerway.com/national/ukraine/premier-league/20192020/regular-season/r54067/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:ukr(?:aine)?|upl)(?: +(.+))?$/i,
     'name': 'UKR',
