@@ -29,6 +29,9 @@ function fetchLeagueClassicStandings(id, κ, κfail) {
     'uri': 'https://fantasy.premierleague.com/api/leagues-classic/'
             + id + '/standings/',
     'gzip': true,
+    'headers': {
+      'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0'
+    }
   };
   request(opts, function(error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -38,7 +41,11 @@ function fetchLeagueClassicStandings(id, κ, κfail) {
         κfail(e);
       }
     } else {
-      κfail(error);
+      if (error) {
+        κfail(error);
+      } else {
+        κfail(`Error fetching standings: ${response.statusCode} ${response.statusMessage}`);
+      }
     }
   });
 }
