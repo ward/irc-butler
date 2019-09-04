@@ -191,8 +191,8 @@ exports.activateOn = function(client) {
     let trimmedText = text.trim();
     let clGroupMatch = trimmedText.match(clGroupMatcher);
     let elGroupMatch = trimmedText.match(elGroupMatcher);
-    let wcGroupMatch = trimmedText.match(wcGroupMatcher);
-    let wcStagesMatch = trimmedText.match(wcStagesMatcher);
+    let wcGroupMatch = null;// trimmedText.match(wcGroupMatcher);
+    let wcStagesMatch = null;// trimmedText.match(wcStagesMatcher);
     if (clGroupMatch !== null) {
       let group = clGroupMatch[1].toUpperCase();
       cl.syncIfNeeded(group, function() {
