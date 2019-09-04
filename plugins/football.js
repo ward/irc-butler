@@ -166,8 +166,8 @@ exports.activateOn = function(client) {
     let competitionmatch = message.match(competitionMatcher);
     if (message === '') {
       doCountries(client, to);
-    } else if (message.search(wcShortcut) > -1) {
-      doAllFromCountry('World Cup Women', client, to);
+    // } else if (message.search(wcShortcut) > -1) {
+    //   doAllFromCountry('World Cup Women', client, to);
     } else if (message.search(clShortcut) > -1) {
       doAllFromCountry('Champions League', client, to);
     } else if (message.search(elShortcut) > -1) {
