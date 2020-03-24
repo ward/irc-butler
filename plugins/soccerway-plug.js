@@ -133,6 +133,13 @@ const leagues = [
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:ukr(?:aine)?|upl)(?: +(.+))?$/i,
     'name': 'UKR',
   },
+  {
+    'soccerway': new Soccerway({
+      '1': 'https://int.soccerway.com/national/singapore/sleague/2020/regular-season/r56009/',
+    }),
+    'matcher': /^!(?:rank|stand)(?:ings?)? +(?:singa?(?:pore|poor)?)(?: +(.+))?$/i,
+    'name': 'SGP',
+  },
 ];
 
 /**
