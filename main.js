@@ -1,5 +1,5 @@
 var util = require('util');
-var irc = require('irc');
+var irc = require('irc-upd');
 var config = require('config');
 
 var plugins = require('./plugins.js');
