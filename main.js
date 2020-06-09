@@ -26,7 +26,9 @@ var client = new irc.Client(
 );
 
 client.addListener('message#', function(nick, to, text, _raw) {
-  util.log(nick, to, text);
+  if (process.env.NODE_ENV !== 'production') {
+    util.log(nick, to, text);
+  }
 });
 
 plugins.enablePlugins(client);
