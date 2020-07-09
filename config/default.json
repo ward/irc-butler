@@ -19,7 +19,8 @@
       "twitter",
       "strava",
       "elo",
-      "soccerway-plug"
+      "soccerway-plug",
+      "alias"
     ],
     "twitter": {
       "consumer_key": null,
