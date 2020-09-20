@@ -65,70 +65,70 @@ const elGroupMatcher = /^!(?:rank|stand)(?:ings?)? +el +([A-L])$/i;
 const leagues = [
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/england/premier-league/20192020/regular-season/r53145/',
+      '1': 'https://int.soccerway.com/national/england/premier-league/20202021/regular-season/r59136/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:eng|england|epl)(?: +(.+))?$/i,
     'name': 'EPL',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/belgium/pro-league/20192020/regular-season/r53516/',
+      '1': 'https://int.soccerway.com/national/belgium/pro-league/20202021/regular-season/r57595/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?:gium|gie)?(?: +(.+))?$/i,
     'name': 'BEL',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/spain/primera-division/20192020/regular-season/r53502/',
+      '1': 'https://int.soccerway.com/national/spain/primera-division/20202021/regular-season/r59097/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:spa(?:in)?|(?:la ?)?liga)(?: +(.+))?$/i,
     'name': 'LIGA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/germany/bundesliga/20192020/regular-season/r53499/',
+      '1': 'https://int.soccerway.com/national/germany/bundesliga/20202021/regular-season/r58871/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:deu|ger(?:many?)?|bund(?:es|esliga)?)(?: +(.+))?$/i,
     'name': 'DEU',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/netherlands/eredivisie/20192020/regular-season/r54058/',
+      '1': 'https://int.soccerway.com/national/netherlands/eredivisie/20202021/regular-season/r57990/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:nld|ned|netherlands|ere(?:divisie)?)(?: +(.+))?$/i,
     'name': 'NLD',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/italy/serie-a/20192020/regular-season/r54890/',
+      '1': 'https://int.soccerway.com/national/italy/serie-a/20202021/regular-season/r59286/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:ita(?:ly)?|serie ?a?)(?: +(.+))?$/i,
     'name': 'ITA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/france/ligue-1/20192020/regular-season/r53638/',
+      '1': 'https://int.soccerway.com/national/france/ligue-1/20202021/regular-season/r58178/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:fra(?:nce)?|ligue ?1?)(?: +(.+))?$/i,
     'name': 'FRA',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/portugal/portuguese-liga-/20192020/regular-season/r53517/',
+      '1': 'https://int.soccerway.com/national/portugal/portuguese-liga-/20202021/regular-season/r59188/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:por(?:tugal)?|primeira(?:.liga)?)(?: +(.+))?$/i,
     'name': 'POR',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/england/championship/20192020/regular-season/r53782/',
+      '1': 'https://int.soccerway.com/national/england/championship/20202021/regular-season/r59442/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:championship|e?pl2|eng(?:land)?2)(?: +(.+))?$/i,
     'name': 'ENG2',
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/ukraine/premier-league/20192020/regular-season/r54067/',
+      '1': 'https://int.soccerway.com/national/ukraine/premier-league/20202021/regular-season/r59290/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +(?:ukr(?:aine)?|upl)(?: +(.+))?$/i,
     'name': 'UKR',
@@ -190,8 +190,8 @@ const wc = new Soccerway({
 // const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
 // const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
 // Female variant
-const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?(?:w(?:omen)?[. -]*)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
-const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?(?:w(?:omen)?[. -]*)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
+// const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?(?:w(?:omen)?[. -]*)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
+// const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?(?:w(?:omen)?[. -]*)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {

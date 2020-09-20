@@ -67,7 +67,7 @@ exports.activateOn = function(client) {
     message = message.trim();
     if (message.search(/^!fpl$/i) > -1) {
       // Default action. Before starting probably "new entries"
-      showStandings(43381, client, to);
+      showStandings(134229, client, to);
     }
   });
 };
