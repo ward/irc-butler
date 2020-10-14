@@ -56,16 +56,21 @@ class Game {
 function fetchLivescore(success, failure) {
   var livescoreoptions = {
     method: 'GET',
-    uri: 'http://www.livescore.com/~~/r/06/hp/soccer/0/',
+    uri: 'https://prod-public-api.livescore.com/v1/api/react/date/soccer/20201014/0.00',
     gzip: true,
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:53.0) Gecko/20100101 Firefox/53.0',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:82.0) Gecko/20100101 Firefox/82.0',
     },
   };
   request(livescoreoptions, function(error, response, body) {
     if (!error && response.statusCode == 200) {
       success(body);
     } else {
+      console.error("fetchLivescore. error:");
+      console.error(error);
+      console.error("fetchLivescore. response:");
+      console.error(response.statusCode);
+
       failure();
     }
   });
@@ -76,12 +81,16 @@ function parseLivescoreJSON(data) {
   let decrypted;
   let obj;
   try {
-    decrypted = livescorecrypt.CryptUtil.decrypt(data);
-    obj = JSON.parse(decrypted);
+    obj = JSON.parse(data);
   } catch (e) {
-    console.error('Failed to decrypt or JSON parse livescore data');
-    console.error(e);
-    return;
+    try {
+      decrypted = livescorecrypt.CryptUtil.decrypt(data);
+      obj = JSON.parse(decrypted);
+    } catch (e) {
+      console.error('Failed to decrypt or JSON parse livescore data');
+      console.error(e);
+      return;
+    }
   }
   for (let i = 0; i < obj['Stages'].length; i++) {
     if (obj['Stages'][i]['Events'] === undefined) {
