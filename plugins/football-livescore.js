@@ -54,9 +54,11 @@ class Game {
  * @param {function} failure Callback to be called if it failed. (no arg)
  */
 function fetchLivescore(success, failure) {
+  let today = new Date();
+  today = `${today.getFullYear()}${today.getMonth() + 1}${today.getDate()}`;
   var livescoreoptions = {
     method: 'GET',
-    uri: 'https://prod-public-api.livescore.com/v1/api/react/date/soccer/20201014/0.00',
+    uri: `https://prod-public-api.livescore.com/v1/api/react/date/soccer/${today}/0.00`,
     gzip: true,
     headers: {
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:82.0) Gecko/20100101 Firefox/82.0',
