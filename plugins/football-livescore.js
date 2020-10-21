@@ -30,6 +30,7 @@ class Game {
   constructor(time, home, away, score) {
     if (time === undefined || home === undefined
         || away === undefined || score === undefined) {
+      console.error("Could not construct Game");
       console.error(time);
       console.error(home);
       console.error(away);
@@ -111,8 +112,20 @@ function parseLivescoreJSON(data) {
       if (time === 'NS') {
         time = events[j]['Esd'].toString().substr(8, 4);
       }
-      let home = events[j]['T1'][0]['Nm'];
-      let away = events[j]['T2'][0]['Nm'];
+      let home;
+      try {
+        home = events[j]['T1'][0]['Nm'];
+      } catch (e) {
+        console.error("Failed to parse hometeam?");
+        home = "No home team";
+      }
+      let away;
+      try {
+        away = events[j]['T2'][0]['Nm'];
+      } catch (e) {
+        console.error("Failed to get awayteam?");
+        away = "No away team";
+      }
       // Tr1 and Tr2 hold the goals
       let score = '? - ?';
       if (events[j].hasOwnProperty('Tr1') && events[j].hasOwnProperty('Tr2')) {
