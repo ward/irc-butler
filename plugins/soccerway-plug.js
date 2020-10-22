@@ -31,33 +31,33 @@ function oneGameToString(game) {
 }
 
 const cl = new Soccerway({
-  'A': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-a/g14741/',
-  'B': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-b/g14742/',
-  'C': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-c/g14743/',
-  'D': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-d/g14744/',
-  'E': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-e/g14745/',
-  'F': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-f/g14746/',
-  'G': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-g/g14747/',
-  'H': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/group-stage/group-h/g14748/',
-  'stages': 'https://int.soccerway.com/international/europe/uefa-champions-league/20192020/s17689/final-stages/'
+  'A': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/group-stage/group-a/g16075/',
+  'B': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/group-stage/group-b/g16076/',
+  'C': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/group-stage/group-c/g16077/',
+  'D': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/group-stage/group-d/g16078/',
+  'E': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/group-stage/group-e/g16079/',
+  'F': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/group-stage/group-f/g16080/',
+  'G': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/group-stage/group-g/g16081/',
+  'H': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/group-stage/group-h/g16082/',
+  'stages': 'https://int.soccerway.com/international/europe/uefa-champions-league/20202021/s19119/final-stages/'
 });
 
 const clGroupMatcher = /^!(?:rank|stand)(?:ings?)? +u?cl +([A-H])$/i;
 
 const el = new Soccerway({
-  'A': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-a/g14707/',
-  'B': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-b/g14708/',
-  'C': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-c/g14709/',
-  'D': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-d/g14710/',
-  'E': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-e/g14711/',
-  'F': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-f/g14712/',
-  'G': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-g/g14713/',
-  'H': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-h/g14714/',
-  'I': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-i/g14715/',
-  'J': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-j/g14716/',
-  'K': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-k/g14717/',
-  'L': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/group-stage/group-l/g14718/',
-  'stages': 'https://int.soccerway.com/international/europe/uefa-cup/20192020/s17653/final-stages/'
+  'A': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-a/g16131/',
+  'B': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-b/g16132/',
+  'C': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-c/g16133/',
+  'D': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-d/g16134/',
+  'E': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-e/g16135/',
+  'F': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-f/g16136/',
+  'G': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-g/g16137/',
+  'H': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-h/g16138/',
+  'I': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-i/g16139/',
+  'J': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-j/g16140/',
+  'K': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-k/g16141/',
+  'L': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/group-stage/group-l/g16142/',
+  'stages': 'https://int.soccerway.com/international/europe/uefa-cup/20202021/s19204/final-stages/'
 });
 
 const elGroupMatcher = /^!(?:rank|stand)(?:ings?)? +el +([A-L])$/i;
