@@ -193,11 +193,27 @@ const wc = new Soccerway({
 // const wcGroupMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?(?:w(?:omen)?[. -]*)?w(?:orld)?[. -]*c(?:up)? +([A-H])$/i;
 // const wcStagesMatcher = /^!(?:(?:rank|stand)(?:ings?)? +)?(?:w(?:omen)?[. -]*)?w(?:orld)?[. -]*c(?:up)? +(.+)$/i;
 
+const wcUefaQualifier = new Soccerway({
+  'A': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-a/g12271/',
+  'B': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-b/g12272/',
+  'C': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-c/g12273/',
+  'D': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-d/g12274/',
+  'E': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-e/g12275/',
+  'F': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-f/g12276/',
+  'G': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-g/g12277/',
+  'H': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-h/g12278/',
+  'I': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-i/g12279/',
+  'J': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-j/g16875/',
+  'stages': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/s15515/final-stages/'
+});
+const wcUefaQualifierGroupMatcher = /^!(?:rank|stand)(?:ings?)? +(?:wc)?uefaq? +([A-H])$/i;
+
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
     let trimmedText = text.trim();
     let clGroupMatch = trimmedText.match(clGroupMatcher);
     let elGroupMatch = trimmedText.match(elGroupMatcher);
+    let wcUefaQualifierGroupMatch = trimmedText.match(wcUefaQualifierGroupMatcher);
     let wcGroupMatch = null;// trimmedText.match(wcGroupMatcher);
     let wcStagesMatch = null;// trimmedText.match(wcStagesMatcher);
     if (clGroupMatch !== null) {
@@ -213,6 +229,15 @@ exports.activateOn = function(client) {
       let group = elGroupMatch[1].toUpperCase();
       el.syncIfNeeded(group, function() {
         let res = el.getGroup(group);
+        res = res.ranks
+          .map(oneTeamToString)
+          .join('; ');
+        client.say(to, '[GROUP ' + group + '] ' + res);
+      });
+    } else if (wcUefaQualifierGroupMatch !== null) {
+      let group = wcUefaQualifierGroupMatch[1].toUpperCase();
+      wcUefaQualifier.syncIfNeeded(group, function() {
+        let res = wcUefaQualifier.getGroup(group);
         res = res.ranks
           .map(oneTeamToString)
           .join('; ');
