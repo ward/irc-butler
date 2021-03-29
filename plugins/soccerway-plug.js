@@ -206,7 +206,17 @@ const wcUefaQualifier = new Soccerway({
   'J': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/1st-round/group-j/g16875/',
   'stages': 'https://int.soccerway.com/international/europe/wc-qualifying-europe/2022-qatar/s15515/final-stages/'
 });
-const wcUefaQualifierGroupMatcher = /^!(?:rank|stand)(?:ings?)? +(?:wc)?uefaq? +([A-H])$/i;
+const wcUefaQualifierGroupMatcher = /^!(?:rank|stand)(?:ings?)? +(?:wc)?uefaq? +([A-J])$/i;
+
+const wcConcacafQualifier = new Soccerway({
+  'A': 'https://int.soccerway.com/international/nc-america/wc-qualifying-concacaf/2022-qatar/4th-round/group-a/g11792/',
+  'B': 'https://int.soccerway.com/international/nc-america/wc-qualifying-concacaf/2022-qatar/4th-round/group-b/g11793/',
+  'C': 'https://int.soccerway.com/international/nc-america/wc-qualifying-concacaf/2022-qatar/4th-round/group-c/g11794/',
+  'D': 'https://int.soccerway.com/international/nc-america/wc-qualifying-concacaf/2022-qatar/4th-round/group-d/g16172/',
+  'E': 'https://int.soccerway.com/international/nc-america/wc-qualifying-concacaf/2022-qatar/4th-round/group-e/g16173/',
+  'F': 'https://int.soccerway.com/international/nc-america/wc-qualifying-concacaf/2022-qatar/4th-round/group-f/g16174/',
+});
+const wcConcacafQualifierGroupMatcher = /^!(?:rank|stand)(?:ings?)? +(?:wc)?concacaf +([A-F])$/i;
 
 exports.activateOn = function(client) {
   client.addListener('message#', function(from, to, text) {
@@ -214,6 +224,7 @@ exports.activateOn = function(client) {
     let clGroupMatch = trimmedText.match(clGroupMatcher);
     let elGroupMatch = trimmedText.match(elGroupMatcher);
     let wcUefaQualifierGroupMatch = trimmedText.match(wcUefaQualifierGroupMatcher);
+    let wcConcacafQualifierGroupMatch = trimmedText.match(wcConcacafQualifierGroupMatcher);
     let wcGroupMatch = null;// trimmedText.match(wcGroupMatcher);
     let wcStagesMatch = null;// trimmedText.match(wcStagesMatcher);
     if (clGroupMatch !== null) {
@@ -238,6 +249,15 @@ exports.activateOn = function(client) {
       let group = wcUefaQualifierGroupMatch[1].toUpperCase();
       wcUefaQualifier.syncIfNeeded(group, function() {
         let res = wcUefaQualifier.getGroup(group);
+        res = res.ranks
+          .map(oneTeamToString)
+          .join('; ');
+        client.say(to, '[GROUP ' + group + '] ' + res);
+      });
+    } else if (wcConcacafQualifierGroupMatch !== null) {
+      let group = wcConcacafQualifierGroupMatch[1].toUpperCase();
+      wcConcacafQualifier.syncIfNeeded(group, function() {
+        let res = wcConcacafQualifier.getGroup(group);
         res = res.ranks
           .map(oneTeamToString)
           .join('; ');
