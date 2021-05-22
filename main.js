@@ -21,6 +21,9 @@ var client = new irc.Client(
     floodProtection: true,
     userName: config.get('irc.userName'),
     realName: config.get('irc.realName'),
+    // Nickserv password to be used through SASL if enabled
+    password: config.get('irc.password'),
+    sasl: config.get('irc.sasl'),
     stripColors: true
   }
 );
