@@ -72,7 +72,7 @@ const leagues = [
   },
   {
     'soccerway': new Soccerway({
-      '1': 'https://int.soccerway.com/national/belgium/pro-league/20202021/regular-season/r57595/',
+      '1': 'https://int.soccerway.com/national/belgium/pro-league/20202021/championship-round/r57596/',
     }),
     'matcher': /^!(?:rank|stand)(?:ings?)? +bel(?:gium|gie)?(?: +(.+))?$/i,
     'name': 'BEL',
